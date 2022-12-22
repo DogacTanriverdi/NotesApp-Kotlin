@@ -58,4 +58,11 @@ class NoteRecyclerAdapter : RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHol
     override fun getItemCount(): Int {
         return notes.size
     }
+
+    // On Item Click Listener
+    private var onItemClickListener: ((Note) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Note) -> Unit) {
+        onItemClickListener = listener
+    }
 }

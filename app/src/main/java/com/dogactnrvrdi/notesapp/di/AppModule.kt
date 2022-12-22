@@ -23,4 +23,8 @@ object AppModule {
         NoteDatabase::class.java,
         "noteDB"
     ).build()
+
+    @Singleton
+    @Provides
+    fun provideNoteDao(db: NoteDatabase) = db.getNoteDao()
 }

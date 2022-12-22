@@ -4,11 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dogactnrvrdi.notesapp.model.Note
 import com.dogactnrvrdi.notesapp.repo.NoteRepository
-import dagger.hilt.android.scopes.ViewModelScoped
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@ViewModelScoped
+@HiltViewModel
 class NoteViewModel @Inject constructor (
     private val repo: NoteRepository
 ) : ViewModel() {
