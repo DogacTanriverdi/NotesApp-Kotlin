@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Not Uygulaması</string>
+    <string name="title">Başlık</string>
+    <string name="type_something">Bir şeyler yaz…</string>
+    <string name="description">Açıklama</string>
+    <string name="floating_action_button">Floating Action Button</string>
+    <string name="saved">Kaydedildi</string>
+    <string name="undo">Geri Al</string>
+    <string name="last_modified">Son Değişiklik: </string>
+    <string name="note_deleted_successfully">Not Başarıyla Silindi</string>
+</resources>

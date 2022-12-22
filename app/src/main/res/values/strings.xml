@@ -2,10 +2,10 @@
     <string name="app_name">Notes App</string>
     <string name="title">Title</string>
     <string name="type_something">Type something…</string>
-    <string name="last_modified">Last Modified: </string>
     <string name="description">Description</string>
     <string name="floating_action_button">Floating Action Button</string>
     <string name="saved">Saved</string>
     <string name="undo">Undo</string>
+    <string name="last_modified">Last Modified: </string>
     <string name="note_deleted_successfully">Note Deleted Successfully</string>
 </resources>

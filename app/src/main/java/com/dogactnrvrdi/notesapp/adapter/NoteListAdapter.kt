@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.ListItemNoteBinding
 import com.dogactnrvrdi.notesapp.model.Note
 
@@ -38,7 +39,7 @@ class NoteListAdapter: ListAdapter<Note, NoteListAdapter.NoteViewHolder>(DiffCal
                 noteTitleTV.text = currentNote.title
                 noteDescriptionTV.text = currentNote.description
 
-                val lastModifiedString = "Last Modified: ${currentNote.createdDateFormatted}"
+                val lastModifiedString = "${R.string.last_modified} ${currentNote.createdDateFormatted}"
                 noteCreatedDateTV.text = lastModifiedString
             }
         }
