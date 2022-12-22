@@ -5,7 +5,9 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.FragmentAddEditNoteBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
     // Binding

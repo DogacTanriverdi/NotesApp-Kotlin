@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.FragmentNotesBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     // Binding
