@@ -8,4 +8,11 @@
     <string name="undo">Geri Al</string>
     <string name="last_modified">Son Değişiklik: </string>
     <string name="note_deleted_successfully">Not Başarıyla Silindi</string>
+    <string name="color_picker_button">Renk seçme Butonu</string>
+    <string name="choose_color">Renk Seçin</string>
+    <string name="want_to_quit">Çıkmak mı istiyorsun?</string>
+    <string name="notes_will_be_deleted">Notların silinecek!</string>
+    <string name="not_saved">Kaydedilmedi!</string>
+    <string name="yes">Evet</string>
+    <string name="no">Hayır</string>
 </resources>

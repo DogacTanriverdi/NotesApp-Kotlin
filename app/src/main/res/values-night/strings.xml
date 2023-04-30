@@ -8,4 +8,11 @@
     <string name="saved">Saved</string>
     <string name="undo">Undo</string>
     <string name="note_deleted_successfully">Note Deleted Successfully</string>
+    <string name="color_picker_button">Color picker Button</string>
+    <string name="choose_color">Choose Color</string>
+    <string name="want_to_quit">Do you want to quit?</string>
+    <string name="notes_will_be_deleted">Your notes will be deleted!</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="not_saved">Not saved!</string>
 </resources>
