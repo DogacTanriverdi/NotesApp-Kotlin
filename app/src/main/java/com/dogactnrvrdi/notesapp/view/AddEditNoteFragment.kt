@@ -47,12 +47,24 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
                 lastModifiedTV.visibility = View.VISIBLE
             }
         }
+
+        try {
+            binding.noteBodyET.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    binding.bottomStyleBar.visibility = View.VISIBLE
+                    binding.noteBodyET.setStylesBar(binding.styleBar)
+                } else
+                    binding.bottomStyleBar.visibility = View.GONE
+            }
+        } catch (e: Exception) {
+            println(e)
+        }
     }
 
     private fun saveNote() {
         binding.apply {
             val title = noteTitleET.text.trim().toString()
-            val description = noteBodyET.text.trim().toString()
+            val description = noteBodyET.text?.trim().toString()
 
             if (title.isEmpty() || description.isEmpty()) {
                 return
