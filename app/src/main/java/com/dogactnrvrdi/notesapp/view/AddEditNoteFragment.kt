@@ -1,6 +1,5 @@
 package com.dogactnrvrdi.notesapp.view
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -30,6 +29,8 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
     // Current Note
     private var currentNote: Note? = null
 
+    private var isSaved: Boolean = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,9 +45,13 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
                 noteTitleET.setText(note.title)
                 noteBodyET.setText(note.description)
                 noteBodyET.requestFocus()
-                val lastModifiedString = "${R.string.last_modified} ${note.createdDateFormatted}"
+                val lastModifiedString =
+                    requireContext().getString(R.string.last_modified) + " " +
+                            note.createdDateFormatted
                 lastModifiedTV.text = lastModifiedString
                 lastModifiedTV.visibility = View.VISIBLE
+                fabSave.visibility = View.GONE
+                fabUpdate.visibility = View.VISIBLE
             }
         }
 
@@ -64,7 +69,7 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
             if (title.isEmpty() || description.isEmpty()) {
                 Toast.makeText(
                     requireContext(),
-                    "Title or description cannot be empty!",
+                    R.string.notes_cannot_be_empty,
                     Toast.LENGTH_LONG
                 ).show()
                 return
@@ -92,31 +97,30 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
                     requireContext(), R.string.saved, Toast.LENGTH_SHORT
                 ).show()
                 findNavController().popBackStack()
+                isSaved = true
             }
         }
     }
 
     override fun onPause() {
         super.onPause()
-        /*
-        val alert = AlertDialog.Builder(requireContext())
-        alert.setTitle(R.string.want_to_quit)
-        alert.setMessage(R.string.notes_will_be_deleted)
-        alert.setPositiveButton(R.string.yes) { p0, p1 ->
-            Toast.makeText(
-                requireContext(), R.string.not_saved, Toast.LENGTH_SHORT
-            ).show()
+        val title = binding.noteTitleET.text.trim().toString()
+        val description = binding.noteBodyET.text?.trim().toString()
+        if (title.isEmpty() && description.isEmpty())
+            return
+        else {
+            if (isSaved) {
+                return
+            }
+            else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.not_saved,
+                    Toast.LENGTH_SHORT
+                ).show()
+                isSaved = false
+            }
         }
-        alert.setNegativeButton(R.string.no) { p0, p1 ->
-            Toast.makeText(
-                requireContext(),
-                "Continue",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        alert.show()
-
-         */
     }
 
     override fun onDestroyView() {

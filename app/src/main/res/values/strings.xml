@@ -1,12 +1,12 @@
 <resources>
-    <string name="app_name">Notes App</string>
+    <string name="app_name">My Notebook</string>
     <string name="title">Title</string>
     <string name="type_something">Type something…</string>
     <string name="description">Description</string>
     <string name="floating_action_button">Floating Action Button</string>
     <string name="saved">Saved</string>
     <string name="undo">Undo</string>
-    <string name="last_modified">Last Modified: </string>
+    <string name="last_modified">Last Modified:</string>
     <string name="note_deleted_successfully">Note Deleted Successfully</string>
     <string name="color_picker_button">Color picker Button</string>
     <string name="choose_color">Choose Color</string>
@@ -15,4 +15,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="not_saved">Not saved!</string>
+    <string name="continue_text">Continue</string>
+    <string name="notes">Notes</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="notes_cannot_be_empty">Title or description cannot be empty!</string>
+    <string name="notebook_logo">Notebook Logo</string>
 </resources>

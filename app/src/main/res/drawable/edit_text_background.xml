@@ -5,15 +5,15 @@
     <solid android:color="@color/white" />
     <stroke
         android:width="2dp"
-        android:color="#FF9F9F"
+        android:color="@color/custom_red"
         />
     <corners
         android:radius="10dp"
         />
 
     <gradient
-        android:startColor="#F5E3FF"
-        android:endColor="#EAFFF7"
+        android:startColor="@color/custom_et_color"
+        android:endColor="@color/custom_et_color_two"
         android:angle="360" />
 
 </shape>

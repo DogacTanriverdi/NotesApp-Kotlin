@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.adapter.NoteListAdapter
 import com.dogactnrvrdi.notesapp.databinding.FragmentNotesBinding
-import com.dogactnrvrdi.notesapp.model.Note
 import com.dogactnrvrdi.notesapp.viewmodel.NoteViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +26,6 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
     private val viewModel: NoteViewModel by viewModels()
 
     // Adapter
-    //private lateinit var noteRecyclerAdapter: NoteRecyclerAdapter
     private lateinit var noteListAdapter: NoteListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

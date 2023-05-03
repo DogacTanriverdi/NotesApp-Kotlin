@@ -1,5 +1,6 @@
 package com.dogactnrvrdi.notesapp.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,11 +17,11 @@ class NoteListAdapter: ListAdapter<Note, NoteListAdapter.NoteViewHolder>(DiffCal
         return NoteViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NoteViewHolder, position: Int,) {
         val currentNote = getItem(position)
 
         if(currentNote != null && position != RecyclerView.NO_POSITION) {
-            holder.bind(currentNote)
+            holder.bind(currentNote, holder.itemView.context)
         }
     }
 
@@ -34,12 +35,13 @@ class NoteListAdapter: ListAdapter<Note, NoteListAdapter.NoteViewHolder>(DiffCal
             }
         }
 
-        fun bind(currentNote: Note) {
+        fun bind(currentNote: Note, context: Context) {
             binding.apply {
                 noteTitleTV.text = currentNote.title
                 noteDescriptionTV.text = currentNote.description
 
-                val lastModifiedString = "${R.string.last_modified} ${currentNote.createdDateFormatted}"
+                val lastModifiedString = context.getString(R.string.last_modified) + " " +
+                        currentNote.createdDateFormatted
                 noteCreatedDateTV.text = lastModifiedString
             }
         }

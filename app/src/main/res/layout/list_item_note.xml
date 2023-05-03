@@ -2,16 +2,19 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
     android:layout_marginHorizontal="8dp"
     android:layout_marginVertical="8dp"
-    app:cardCornerRadius="10dp">
+    app:cardCornerRadius="10dp"
+    android:background="@color/custom_background">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@drawable/list_item_background"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center">
 
         <TextView
             android:id="@+id/noteTitleTV"
@@ -24,7 +27,7 @@
             android:maxLines="1"
             android:text="@string/title"
             android:textAlignment="textStart"
-            android:textColor="@color/black"
+            android:textColor="@color/color_text"
             android:textSize="18sp" />
 
         <TextView
@@ -38,7 +41,7 @@
             android:maxLines="1"
             android:text="@string/description"
             android:textAlignment="textStart"
-            android:textColor="@color/black"
+            android:textColor="@color/color_text"
             android:textSize="14sp" />
 
         <TextView
@@ -51,7 +54,7 @@
             android:fontFamily="@font/montserrat"
             android:text="@string/last_modified"
             android:textAlignment="textStart"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
     </LinearLayout>
 

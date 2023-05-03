@@ -4,10 +4,16 @@
     <color name="purple_200">#CA9FFF</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="teal_900">#03506f</color>
+    <color name="color_text">#FF000000</color>
+    <color name="custom_teal">#DCF5FF</color>
+    <color name="custom_purple">#F5E3FF</color>
+    <color name="custom_red">#FFA7A7</color>
+    <color name="teal_200">#03506f</color>
+    <color name="teal_700">#03506f</color>
     <color name="black">#FF000000</color>
+    <color name="custom_toolbar_color">#CA9FFF</color>
+    <color name="custom_et_color">#DCF5FF</color>
+    <color name="custom_et_color_two">#F5E3FF</color>
     <color name="white">#FFFFFFFF</color>
     <color name="custom_background">#FFF0F0</color>
 </resources>
