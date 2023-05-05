@@ -12,6 +12,7 @@
     <color name="teal_700">#03506f</color>
     <color name="black">#FF000000</color>
     <color name="custom_toolbar_color">#CA9FFF</color>
+    <color name="text_cursor_color">#000000</color>
     <color name="custom_et_color">#DCF5FF</color>
     <color name="custom_et_color_two">#F5E3FF</color>
     <color name="white">#FFFFFFFF</color>

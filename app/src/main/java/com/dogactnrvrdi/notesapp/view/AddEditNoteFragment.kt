@@ -29,6 +29,7 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
     // Current Note
     private var currentNote: Note? = null
 
+    // Is Saved
     private var isSaved: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -58,6 +59,10 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
         // Save Note Fab
         binding.fabSave.setOnClickListener {
             saveNote()
+        }
+
+        binding.fabUpdate.setOnClickListener {
+            updateNote()
         }
     }
 
@@ -102,6 +107,52 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
         }
     }
 
+    private fun updateNote() {
+        binding.apply {
+            val title = noteTitleET.text.trim().toString()
+            val description = noteBodyET.text?.trim().toString()
+
+            if (title.isEmpty() || description.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.notes_cannot_be_empty,
+                    Toast.LENGTH_LONG
+                ).show()
+                return
+            }
+
+            currentNote?.let {
+                if (title == it.title && description == it.description) {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.no_changes,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return
+                }
+            }
+
+            val newNote = if (currentNote == null) {
+                Note(title, description)
+            } else {
+                currentNote?.apply {
+                    this.title = title
+                    this.description = description
+                    this.created = System.currentTimeMillis()
+                }
+            }
+
+            if (newNote != null) {
+                viewModel.insertNote(newNote)
+                Toast.makeText(
+                    requireContext(), R.string.updated, Toast.LENGTH_SHORT
+                ).show()
+                findNavController().popBackStack()
+                isSaved = true
+            }
+        }
+    }
+
     override fun onPause() {
         super.onPause()
         val title = binding.noteTitleET.text.trim().toString()
@@ -112,14 +163,19 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
             if (isSaved) {
                 return
             }
-            else {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.not_saved,
-                    Toast.LENGTH_SHORT
-                ).show()
-                isSaved = false
+            currentNote?.let {
+                if (title == it.title && description == it.description) {
+                    return
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        R.string.not_saved,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    isSaved = false
+                }
             }
+
         }
     }
 

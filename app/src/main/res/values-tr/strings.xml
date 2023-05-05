@@ -5,8 +5,11 @@
     <string name="description">Açıklama</string>
     <string name="floating_action_button">Floating Action Button</string>
     <string name="saved">Kaydedildi</string>
+    <string name="updated">Güncellendi</string>
     <string name="undo">Geri Al</string>
-    <string name="last_modified">Son Düzenleme:</string>
+    <string name="no_changes">Değişiklik yok!</string>
+    <string name="last_modified_capital_caps">Son Düzenleme:</string>
+    <string name="last_modified">Son düzenleme:</string>
     <string name="note_deleted_successfully">Not Başarıyla Silindi</string>
     <string name="color_picker_button">Renk seçme Butonu</string>
     <string name="choose_color">Renk Seçin</string>

@@ -40,7 +40,7 @@ class NoteListAdapter: ListAdapter<Note, NoteListAdapter.NoteViewHolder>(DiffCal
                 noteTitleTV.text = currentNote.title
                 noteDescriptionTV.text = currentNote.description
 
-                val lastModifiedString = context.getString(R.string.last_modified) + " " +
+                val lastModifiedString = context.getString(R.string.last_modified_capital_caps) + " " +
                         currentNote.createdDateFormatted
                 noteCreatedDateTV.text = lastModifiedString
             }

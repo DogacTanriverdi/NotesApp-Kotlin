@@ -4,9 +4,12 @@
     <string name="title">Title</string>
     <string name="type_something">Type something…</string>
     <string name="last_modified">Last Modified:</string>
+    <string name="last_modified_capital_caps">Last Modified:</string>
     <string name="description">Description</string>
     <string name="floating_action_button">Floating Action Button</string>
     <string name="saved">Saved</string>
+    <string name="updated">Updated</string>
+    <string name="no_changes">No changes!</string>
     <string name="undo">Undo</string>
     <string name="note_deleted_successfully">Note Deleted Successfully</string>
     <string name="color_picker_button">Color picker Button</string>
