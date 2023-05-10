@@ -1,10 +1,12 @@
 package com.dogactnrvrdi.notesapp.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.ListItemNoteBinding
 import com.dogactnrvrdi.notesapp.model.Note
 
@@ -14,11 +16,13 @@ class NoteRecyclerAdapter : RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHol
         private val binding: ListItemNoteBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(note: Note) {
+        fun bind(note: Note, context: Context) {
             binding.apply {
                 noteTitleTV.text = note.title
                 noteDescriptionTV.text = note.description
-                val lastModifiedString = "Last Modified: ${note.createdDateFormatted}"
+                val lastModifiedString =
+                    context.getString(R.string.last_modified_capital_caps) + " " +
+                            note.createdDateFormatted
                 noteCreatedDateTV.text = lastModifiedString
             }
         }
@@ -36,7 +40,7 @@ class NoteRecyclerAdapter : RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHol
         }
     }
 
-    private val recyclerListDiffer = AsyncListDiffer(this, diffUtil)
+    val recyclerListDiffer = AsyncListDiffer(this, diffUtil)
 
     var notes: List<Note>
         get() = recyclerListDiffer.currentList
@@ -52,7 +56,12 @@ class NoteRecyclerAdapter : RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHol
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
-        holder.bind(note)
+        holder.bind(note, holder.itemView.context)
+        holder.itemView.setOnClickListener {
+            onItemClickListener?.let {
+                it(note)
+            }
+        }
     }
 
     override fun getItemCount(): Int {

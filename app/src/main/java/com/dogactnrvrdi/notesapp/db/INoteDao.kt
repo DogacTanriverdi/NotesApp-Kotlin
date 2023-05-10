@@ -19,4 +19,7 @@ interface INoteDao {
 
     @Query("SELECT * FROM notes ORDER BY created DESC")
     fun getAllNotesSortedByCreated(): LiveData<List<Note>>
+
+    @Query("SELECT * FROM notes WHERE title LIKE :query OR description LIKE :query")
+    fun searchNote(query: String?): LiveData<List<Note>>
 }

@@ -1,7 +1,12 @@
 package com.dogactnrvrdi.notesapp.view
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -9,14 +14,17 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dogactnrvrdi.notesapp.R
-import com.dogactnrvrdi.notesapp.adapter.NoteListAdapter
+import com.dogactnrvrdi.notesapp.adapter.NoteRecyclerAdapter
 import com.dogactnrvrdi.notesapp.databinding.FragmentNotesBinding
 import com.dogactnrvrdi.notesapp.viewmodel.NoteViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotesFragment : Fragment(R.layout.fragment_notes) {
+class NotesFragment :
+    Fragment(R.layout.fragment_notes),
+    SearchView.OnQueryTextListener,
+    MenuProvider {
 
     // Binding
     private var _binding: FragmentNotesBinding? = null
@@ -26,7 +34,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
     private val viewModel: NoteViewModel by viewModels()
 
     // Adapter
-    private lateinit var noteListAdapter: NoteListAdapter
+    private lateinit var noteRecyclerAdapter: NoteRecyclerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,17 +52,19 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
 
         // Subscribe to Observers
         subscribeToObservers()
+
+        activity?.addMenuProvider(this)
     }
 
     // RecyclerView Setup
     private fun setupRecyclerView() {
-        noteListAdapter = NoteListAdapter()
+        noteRecyclerAdapter = NoteRecyclerAdapter()
         binding.notesRV.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = noteListAdapter
+            adapter = noteRecyclerAdapter
         }
 
-        noteListAdapter.setOnItemClickListener {
+        noteRecyclerAdapter.setOnItemClickListener {
             val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(it)
             findNavController().navigate(action)
         }
@@ -77,7 +87,7 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val itemPosition = viewHolder.adapterPosition
-                val currentNote = noteListAdapter.currentList[itemPosition]
+                val currentNote = noteRecyclerAdapter.notes[itemPosition]
 
                 viewModel.deleteNote(currentNote)
 
@@ -94,13 +104,46 @@ class NotesFragment : Fragment(R.layout.fragment_notes) {
 
     // Subscribe To Observers/*
     private fun subscribeToObservers() {
-        viewModel.notes.observe(viewLifecycleOwner) {
-            noteListAdapter.submitList(it)
+        viewModel.notes.observe(viewLifecycleOwner) { list ->
+            noteRecyclerAdapter.recyclerListDiffer.submitList(list)
         }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        activity?.removeMenuProvider(this)
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        if (query != null)
+            searchNotes(query)
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+
+        if (newText != null)
+            searchNotes(newText)
+        return true
+    }
+
+    private fun searchNotes(query: String?) {
+        val searchQuery = "%$query%"
+        viewModel.searchNote(searchQuery).observe(viewLifecycleOwner) { list ->
+            noteRecyclerAdapter.recyclerListDiffer.submitList(list)
+        }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        val menuSearch = menu.findItem(R.id.menu_search).actionView as SearchView
+        menuSearch.queryHint = "Search note here..."
+        menuSearch.isSubmitButtonEnabled = true
+        menuSearch.setOnQueryTextListener(this)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return true
     }
 }

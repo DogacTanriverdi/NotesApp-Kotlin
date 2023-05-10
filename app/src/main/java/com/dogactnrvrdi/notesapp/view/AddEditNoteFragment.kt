@@ -61,9 +61,11 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
             saveNote()
         }
 
+        // Update Note Fab
         binding.fabUpdate.setOnClickListener {
             updateNote()
         }
+
     }
 
     private fun saveNote() {
@@ -157,25 +159,23 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
         super.onPause()
         val title = binding.noteTitleET.text.trim().toString()
         val description = binding.noteBodyET.text?.trim().toString()
+
         if (title.isEmpty() && description.isEmpty())
             return
         else {
             if (isSaved) {
                 return
             }
-            currentNote?.let {
-                if (title == it.title && description == it.description) {
-                    return
-                } else {
-                    Toast.makeText(
-                        requireContext(),
-                        R.string.not_saved,
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    isSaved = false
-                }
+            if (title.isEmpty() && description.isEmpty()) {
+                return
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    R.string.not_saved,
+                    Toast.LENGTH_SHORT
+                ).show()
+                isSaved = false
             }
-
         }
     }
 

@@ -22,4 +22,6 @@ class NoteViewModel @Inject constructor (
     fun deleteNote(note: Note) = viewModelScope.launch {
         repo.deleteNote(note)
     }
+
+    fun searchNote(query: String?) = repo.searchNote(query)
 }

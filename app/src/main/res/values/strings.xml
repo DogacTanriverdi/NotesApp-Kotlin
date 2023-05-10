@@ -23,4 +23,9 @@
     <string name="edit_note">Edit Note</string>
     <string name="notes_cannot_be_empty">Title or description cannot be empty!</string>
     <string name="notebook_logo">Notebook Logo</string>
+    <string name="type_bold">Type bold</string>
+    <string name="type_italic">Type italic</string>
+    <string name="type_underline">Type underline</string>
+    <string name="search">Search</string>
+    <string name="search_note_here">Search in notes…</string>
 </resources>

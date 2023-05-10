@@ -23,4 +23,9 @@
     <string name="edit_note">Düzenle</string>
     <string name="notes_cannot_be_empty">Başlık veya açıklama boş olamaz!</string>
     <string name="notebook_logo">Notebook Logosu</string>
+    <string name="type_bold">Kalın yaz</string>
+    <string name="type_italic">İtalik yaz</string>
+    <string name="type_underline">Altı çizili yaz</string>
+    <string name="search">Ara</string>
+    <string name="search_note_here">Notlarda ara…</string>
 </resources>
