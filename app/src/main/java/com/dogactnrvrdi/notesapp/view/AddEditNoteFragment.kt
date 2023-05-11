@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.FragmentAddEditNoteBinding
 import com.dogactnrvrdi.notesapp.model.Note
+import com.dogactnrvrdi.notesapp.util.Util
 import com.dogactnrvrdi.notesapp.viewmodel.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,6 +33,8 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
     // Is Saved
     private var isSaved: Boolean = false
 
+    private val util = Util()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -47,7 +50,7 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
                 noteBodyET.setText(note.description)
                 noteBodyET.requestFocus()
                 val lastModifiedString =
-                    requireContext().getString(R.string.last_modified) + " " +
+                    getString(R.string.last_modified) + " " +
                             note.createdDateFormatted
                 lastModifiedTV.text = lastModifiedString
                 lastModifiedTV.visibility = View.VISIBLE
@@ -74,11 +77,10 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
             val description = noteBodyET.text?.trim().toString()
 
             if (title.isEmpty() || description.isEmpty()) {
-                Toast.makeText(
+                util.toastLong(
                     requireContext(),
-                    R.string.notes_cannot_be_empty,
-                    Toast.LENGTH_LONG
-                ).show()
+                    getString(R.string.notes_cannot_be_empty)
+                )
                 return
             }
 
@@ -100,9 +102,10 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
             if (newNote != null) {
                 viewModel.insertNote(newNote)
-                Toast.makeText(
-                    requireContext(), R.string.saved, Toast.LENGTH_SHORT
-                ).show()
+                util.toastShort(
+                    requireContext(),
+                    getString(R.string.saved)
+                )
                 findNavController().popBackStack()
                 isSaved = true
             }
@@ -115,21 +118,19 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
             val description = noteBodyET.text?.trim().toString()
 
             if (title.isEmpty() || description.isEmpty()) {
-                Toast.makeText(
+                util.toastLong(
                     requireContext(),
-                    R.string.notes_cannot_be_empty,
-                    Toast.LENGTH_LONG
-                ).show()
+                    getString(R.string.notes_cannot_be_empty)
+                )
                 return
             }
 
             currentNote?.let {
                 if (title == it.title && description == it.description) {
-                    Toast.makeText(
+                    util.toastShort(
                         requireContext(),
-                        R.string.no_changes,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        getString(R.string.no_changes)
+                    )
                     return
                 }
             }
@@ -146,9 +147,10 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
             if (newNote != null) {
                 viewModel.insertNote(newNote)
-                Toast.makeText(
-                    requireContext(), R.string.updated, Toast.LENGTH_SHORT
-                ).show()
+                util.toastShort(
+                    requireContext(),
+                    getString(R.string.updated)
+                )
                 findNavController().popBackStack()
                 isSaved = true
             }
@@ -163,11 +165,10 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
         if (title.isEmpty() && description.isEmpty())
             return
         else if (title.isEmpty() || description.isEmpty()) {
-            Toast.makeText(
+            util.toastShort(
                 requireContext(),
-                R.string.not_saved,
-                Toast.LENGTH_SHORT
-            ).show()
+                getString(R.string.not_saved)
+            )
             isSaved = false
         } else {
             if (isSaved) {
@@ -180,11 +181,10 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
                     if (title == it.title && description == it.description)
                         return
                     else {
-                        Toast.makeText(
+                        util.toastShort(
                             requireContext(),
-                            R.string.not_saved,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                            getString(R.string.not_saved)
+                        )
                         isSaved = false
                     }
                 }

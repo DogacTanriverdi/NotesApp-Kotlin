@@ -92,8 +92,10 @@ class NotesFragment :
                 viewModel.deleteNote(currentNote)
 
                 Snackbar.make(
-                    requireView(), R.string.note_deleted_successfully, Snackbar.LENGTH_LONG
-                ).setAction(R.string.undo) {
+                    requireView(),
+                    getString(R.string.note_deleted_successfully),
+                    Snackbar.LENGTH_LONG
+                ).setAction(getString(R.string.undo)) {
                     viewModel.insertNote(currentNote)
                 }.show()
             }
