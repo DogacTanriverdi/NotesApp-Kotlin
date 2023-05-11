@@ -138,7 +138,7 @@ class NotesFragment :
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.home_menu, menu)
         val menuSearch = menu.findItem(R.id.menu_search).actionView as SearchView
-        menuSearch.queryHint = "Search note here..."
+        menuSearch.queryHint = requireContext().getString(R.string.search_in_notes)
         menuSearch.isSubmitButtonEnabled = true
         menuSearch.setOnQueryTextListener(this)
     }

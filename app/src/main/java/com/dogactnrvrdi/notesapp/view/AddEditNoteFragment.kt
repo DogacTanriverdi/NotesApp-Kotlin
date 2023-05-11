@@ -162,21 +162,35 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
         if (title.isEmpty() && description.isEmpty())
             return
-        else {
+        else if (title.isEmpty() || description.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                R.string.not_saved,
+                Toast.LENGTH_SHORT
+            ).show()
+            isSaved = false
+        } else {
             if (isSaved) {
                 return
             }
             if (title.isEmpty() && description.isEmpty()) {
                 return
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    R.string.not_saved,
-                    Toast.LENGTH_SHORT
-                ).show()
-                isSaved = false
+                currentNote?.let {
+                    if (title == it.title && description == it.description)
+                        return
+                    else {
+                        Toast.makeText(
+                            requireContext(),
+                            R.string.not_saved,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        isSaved = false
+                    }
+                }
             }
         }
+
     }
 
     override fun onDestroyView() {

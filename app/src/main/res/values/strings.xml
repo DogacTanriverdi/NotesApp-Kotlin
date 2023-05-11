@@ -27,5 +27,5 @@
     <string name="type_italic">Type italic</string>
     <string name="type_underline">Type underline</string>
     <string name="search">Search</string>
-    <string name="search_note_here">Search in notes…</string>
+    <string name="search_in_notes">Search in notes…</string>
 </resources>
