@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.NotesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.NotesApp" parent="Theme.Material3.Dark.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">#8828FF</item>
         <item name="colorPrimaryVariant">#B070FF</item>
@@ -10,7 +10,7 @@
         <item name="colorSecondaryVariant">@color/custom_purple</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">#452355</item>
+        <item name="android:statusBarColor">@color/custom_statusbar_color</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

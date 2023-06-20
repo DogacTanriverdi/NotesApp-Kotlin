@@ -6,15 +6,20 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="color_text">#FF000000</color>
     <color name="custom_teal">#DCF5FF</color>
-    <color name="custom_purple">#F5E3FF</color>
+    <color name="custom_text_color_one">#F3DCFF</color>
+    <color name="custom_text_color_two">#FFD2D2</color>
+    <color name="custom_purple">#EB9AFF</color>
     <color name="custom_red">#FFA7A7</color>
     <color name="teal_200">#03506f</color>
     <color name="teal_700">#03506f</color>
     <color name="black">#FF000000</color>
-    <color name="custom_toolbar_color">#CA9FFF</color>
+    <color name="custom_toolbar_color">#F3EAFF</color>
+    <color name="custom_statusbar_color">#DDC5FF</color>
     <color name="text_cursor_color">#000000</color>
-    <color name="custom_et_color">#DCF5FF</color>
-    <color name="custom_et_color_two">#F5E3FF</color>
+    <color name="custom_et_color">#F3DCFF</color>
+    <color name="custom_et_color_two">#FFBBBB</color>
     <color name="white">#FFFFFFFF</color>
     <color name="custom_background">#FFF0F0</color>
+    <color name="custom_toolbar_text_color">#FF000000</color>
+    <color name="custom_fab_color">#FFE9DCFE</color>
 </resources>

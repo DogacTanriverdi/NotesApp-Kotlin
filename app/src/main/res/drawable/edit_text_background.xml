@@ -12,8 +12,8 @@
         />
 
     <gradient
-        android:startColor="@color/custom_et_color"
-        android:endColor="@color/custom_et_color_two"
+        android:startColor="@color/custom_text_color_one"
+        android:endColor="@color/custom_text_color_two"
         android:angle="360" />
 
 </shape>

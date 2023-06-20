@@ -6,13 +6,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import com.dogactnrvrdi.notesapp.R
 
 @SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {
 
     private var runnable = Runnable {}
-    private var handler = Handler()
+    private var handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,7 @@ class SplashScreen : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-            handler.postDelayed(runnable, 2000)
+            handler.postDelayed(runnable, 1000)
         } else {
             val intent = Intent(
                 this@SplashScreen,

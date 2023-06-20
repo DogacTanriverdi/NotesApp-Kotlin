@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SplashScreen"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".activities.SplashScreen">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/logo_open"
-        android:contentDescription="@string/notebook_logo" />
+        android:contentDescription="@string/notebook_logo"
+        android:src="@drawable/logo_open" />
 
 </LinearLayout>
