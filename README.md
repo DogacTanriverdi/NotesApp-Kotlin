@@ -5,10 +5,10 @@
 </a>
 
 ## Screenshots
-![alt text](C:\Users\dogac\OneDrive\Masaüstü\NotesApp\English\google_play_store_english_screenshot_one.jpg)
-![alt text](C:\Users\dogac\OneDrive\Masaüstü\NotesApp\English\google_play_store_english_screenshot_two.jpg)
-![alt text](C:\Users\dogac\OneDrive\Masaüstü\NotesApp\English\google_play_store_english_screenshot_three.jpg)
-![alt text](C:\Users\dogac\OneDrive\Masaüstü\NotesApp\English\google_play_store_english_screenshot_four.jpg)
+![](C:\Users\dogac\OneDrive\Masaüstü\NotesApp\English\google_play_store_english_screenshot_one.jpg)
+![](C:\Users\dogac\OneDrive\Masaüstü\NotesApp\English\google_play_store_english_screenshot_two.jpg)
+![](C:\Users\dogac\OneDrive\Masaüstü\NotesApp\English\google_play_store_english_screenshot_three.jpg)
+![](C:\Users\dogac\OneDrive\Masaüstü\NotesApp\English\google_play_store_english_screenshot_four.jpg)
 
 ## Technologies I used while making this application:
 - MVVM
