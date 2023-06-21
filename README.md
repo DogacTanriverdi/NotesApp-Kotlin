@@ -5,10 +5,7 @@
 </a>
 
 ## Screenshots
-  <img alt='Screenshot one' src='https://github.com/DogacTanriverdi/NotesApp-Files/blob/master/English/google_play_store_english_screenshot_one.jpg' width="200" height="500"/>
-  <img alt='Screenshot one' src='https://github.com/DogacTanriverdi/NotesApp-Files/blob/master/English/google_play_store_english_screenshot_two.jpg' width="200" height="500"/>
-  <img alt='Screenshot one' src='https://github.com/DogacTanriverdi/NotesApp-Files/blob/master/English/google_play_store_english_screenshot_three.jpg' width="200" height="500"/>
-  <img alt='Screenshot one' src='https://github.com/DogacTanriverdi/NotesApp-Files/blob/master/English/google_play_store_english_screenshot_four.jpg' width="200" height="500"/>
+  <img alt='Screenshot one' src='https://github.com/DogacTanriverdi/NotesApp-Files/blob/master/English/google_play_store_english_screenshot_one.jpg' width="250" height="500"/> <img alt='Screenshot one' src='https://github.com/DogacTanriverdi/NotesApp-Files/blob/master/English/google_play_store_english_screenshot_two.jpg' width="250" height="500"/> <img alt='Screenshot one' src='https://github.com/DogacTanriverdi/NotesApp-Files/blob/master/English/google_play_store_english_screenshot_three.jpg' width="250" height="500"/> <img alt='Screenshot one' src='https://github.com/DogacTanriverdi/NotesApp-Files/blob/master/English/google_play_store_english_screenshot_four.jpg' width="250" height="500"/>
 
 ## Technologies I used while making this application:
 - MVVM
