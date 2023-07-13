@@ -22,4 +22,5 @@
     <color name="custom_background">#353232</color>
     <color name="custom_toolbar_text_color">#FFFFFFFF</color>
     <color name="custom_fab_color">#696075</color>
+    <color name="text_style_color">#FFFFFFFF</color>
 </resources>

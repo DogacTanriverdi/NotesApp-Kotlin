@@ -28,4 +28,8 @@
     <string name="type_underline">Altı çizili yaz</string>
     <string name="search">Ara</string>
     <string name="search_in_notes">Notlarda ara…</string>
+    <string name="bold_button">Kalın yazı butonu</string>
+    <string name="italic_button">İtalik yazı butonu</string>
+    <string name="underline_button">Altı çizili yazı butonu</string>
+    <string name="normal_text_button">Normal yazı butonu</string>
 </resources>

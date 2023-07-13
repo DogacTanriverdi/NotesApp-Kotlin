@@ -73,6 +73,50 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_text_style">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_bold"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:contentDescription="@string/bold_button" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_italic"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:contentDescription="@string/italic_button" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_underline"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:contentDescription="@string/underline_button" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_format_clear"
+            android:background="@android:color/transparent"
+            android:padding="10dp"
+            android:contentDescription="@string/normal_text_button" />
+
+
+    </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabSave"
         android:layout_width="wrap_content"

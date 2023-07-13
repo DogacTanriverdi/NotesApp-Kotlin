@@ -28,4 +28,8 @@
     <string name="type_underline">Type underline</string>
     <string name="search">Search</string>
     <string name="search_in_notes">Search in notes…</string>
+    <string name="bold_button">Bold text button</string>
+    <string name="italic_button">Italic text button</string>
+    <string name="underline_button">Underline text button</string>
+    <string name="normal_text_button">Normal text button</string>
 </resources>

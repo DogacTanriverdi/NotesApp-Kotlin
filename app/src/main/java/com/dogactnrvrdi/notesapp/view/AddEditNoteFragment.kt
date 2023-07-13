@@ -73,7 +73,7 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
     private fun saveNote() {
         binding.apply {
-            val title = noteTitleET.text.trim().toString()
+            val title = noteTitleET.text?.trim().toString()
             val description = noteBodyET.text?.trim().toString()
 
             if (title.isEmpty() || description.isEmpty()) {
@@ -114,7 +114,7 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
     private fun updateNote() {
         binding.apply {
-            val title = noteTitleET.text.trim().toString()
+            val title = noteTitleET.text?.trim().toString()
             val description = noteBodyET.text?.trim().toString()
 
             if (title.isEmpty() || description.isEmpty()) {
@@ -159,7 +159,7 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
     override fun onPause() {
         super.onPause()
-        val title = binding.noteTitleET.text.trim().toString()
+        val title = binding.noteTitleET.text?.trim().toString()
         val description = binding.noteBodyET.text?.trim().toString()
 
         if (title.isEmpty() && description.isEmpty())
