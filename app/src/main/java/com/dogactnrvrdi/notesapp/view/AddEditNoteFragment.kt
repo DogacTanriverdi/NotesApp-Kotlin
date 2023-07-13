@@ -1,8 +1,12 @@
 package com.dogactnrvrdi.notesapp.view
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.StyleSpan
+import android.text.style.UnderlineSpan
 import android.view.View
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +17,8 @@ import com.dogactnrvrdi.notesapp.model.Note
 import com.dogactnrvrdi.notesapp.util.Util
 import com.dogactnrvrdi.notesapp.viewmodel.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import org.w3c.dom.Text
+
 
 @AndroidEntryPoint
 class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
@@ -56,6 +62,9 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
                 lastModifiedTV.visibility = View.VISIBLE
                 fabSave.visibility = View.GONE
                 fabUpdate.visibility = View.VISIBLE
+                binding.textStyles.visibility = View.GONE
+                binding.updateTextStyles.visibility = View.VISIBLE
+
             }
         }
 
@@ -68,7 +77,6 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
         binding.fabUpdate.setOnClickListener {
             updateNote()
         }
-
     }
 
     private fun saveNote() {

@@ -74,45 +74,102 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
+        android:id="@+id/textStyles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_gravity="bottom|center"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/bg_text_style">
+        android:background="@drawable/bg_text_style"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/ibBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_bold"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/bold_button"
             android:padding="10dp"
-            android:contentDescription="@string/bold_button" />
+            android:src="@drawable/ic_bold" />
 
         <ImageButton
+            android:id="@+id/ibItalic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_italic"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/italic_button"
             android:padding="10dp"
-            android:contentDescription="@string/italic_button" />
+            android:src="@drawable/ic_italic" />
 
         <ImageButton
+            android:id="@+id/ibUnderline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_underline"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/underline_button"
             android:padding="10dp"
-            android:contentDescription="@string/underline_button" />
+            android:src="@drawable/ic_underline" />
 
         <ImageButton
+            android:id="@+id/ibFormatClear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_format_clear"
             android:background="@android:color/transparent"
+            android:contentDescription="@string/normal_text_button"
             android:padding="10dp"
-            android:contentDescription="@string/normal_text_button" />
+            android:src="@drawable/ic_format_clear" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/updateTextStyles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="72dp"
+        android:background="@drawable/bg_text_style"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/ibBoldUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/bold_button"
+            android:padding="10dp"
+            android:src="@drawable/ic_bold" />
+
+        <ImageButton
+            android:id="@+id/ibItalicUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/italic_button"
+            android:padding="10dp"
+            android:src="@drawable/ic_italic" />
+
+        <ImageButton
+            android:id="@+id/ibUnderlineUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/underline_button"
+            android:padding="10dp"
+            android:src="@drawable/ic_underline" />
+
+        <ImageButton
+            android:id="@+id/ibFormatClearUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/normal_text_button"
+            android:padding="10dp"
+            android:src="@drawable/ic_format_clear" />
 
 
     </LinearLayout>
