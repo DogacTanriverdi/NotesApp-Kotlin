@@ -62,9 +62,6 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
                 lastModifiedTV.visibility = View.VISIBLE
                 fabSave.visibility = View.GONE
                 fabUpdate.visibility = View.VISIBLE
-                binding.textStyles.visibility = View.GONE
-                binding.updateTextStyles.visibility = View.VISIBLE
-
             }
         }
 
