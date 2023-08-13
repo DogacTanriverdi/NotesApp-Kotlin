@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.adapter.NoteRecyclerAdapter
 import com.dogactnrvrdi.notesapp.databinding.FragmentNotesBinding
@@ -60,7 +61,8 @@ class NotesFragment :
     private fun setupRecyclerView() {
         noteRecyclerAdapter = NoteRecyclerAdapter()
         binding.notesRV.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            setHasFixedSize(true)
             adapter = noteRecyclerAdapter
         }
 

@@ -2,7 +2,7 @@
 <shape android:shape="rectangle"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/white" />
+    <solid android:color="@color/custom_background" />
     <stroke
         android:width="2dp"
         android:color="@color/text_style_color"
@@ -10,10 +10,5 @@
     <corners
         android:radius="10dp"
         />
-
-    <gradient
-        android:startColor="@color/custom_text_color_two"
-        android:endColor="@color/custom_text_color_one"
-        android:angle="360" />
 
 </shape>

@@ -8,7 +8,7 @@
     <color name="custom_teal">#494949</color>
     <color name="custom_text_color_one">#6B5D71</color>
     <color name="custom_text_color_two">#353232</color>
-    <color name="custom_purple">#604766</color>
+    <color name="custom_purple">#CE8ADF</color>
     <color name="custom_red">#C17F7F</color>
     <color name="teal_200">#03506f</color>
     <color name="teal_700">#03506f</color>
@@ -21,6 +21,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="custom_background">#353232</color>
     <color name="custom_toolbar_text_color">#FFFFFFFF</color>
-    <color name="custom_fab_color">#696075</color>
+    <color name="custom_fab_color">#524059</color>
     <color name="text_style_color">#FFFFFFFF</color>
 </resources>
