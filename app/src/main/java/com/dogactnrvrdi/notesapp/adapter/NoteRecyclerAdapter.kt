@@ -1,14 +1,17 @@
 package com.dogactnrvrdi.notesapp.adapter
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.ListItemNoteBinding
 import com.dogactnrvrdi.notesapp.model.Note
+import kotlin.coroutines.coroutineContext
 
 class NoteRecyclerAdapter : RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder>() {
 
