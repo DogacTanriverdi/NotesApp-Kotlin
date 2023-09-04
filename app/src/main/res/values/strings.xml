@@ -32,4 +32,8 @@
     <string name="italic_button">Italic text button</string>
     <string name="underline_button">Underline text button</string>
     <string name="normal_text_button">Normal text button</string>
+    <string name="save">Save</string>
+    <string name="new_note">New Note</string>
+    <string name="save_note">Save</string>
+    <string name="update_note">Update</string>
 </resources>

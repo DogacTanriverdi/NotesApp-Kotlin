@@ -1,12 +1,10 @@
 package com.dogactnrvrdi.notesapp.view
 
-import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.style.StyleSpan
-import android.text.style.UnderlineSpan
 import android.view.View
-import android.widget.TextView
+import android.view.View.OnFocusChangeListener
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -17,7 +15,6 @@ import com.dogactnrvrdi.notesapp.model.Note
 import com.dogactnrvrdi.notesapp.util.Util
 import com.dogactnrvrdi.notesapp.viewmodel.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import org.w3c.dom.Text
 
 
 @AndroidEntryPoint
@@ -40,6 +37,7 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
     private var isSaved: Boolean = false
 
     private val util = Util()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,14 +63,28 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
             }
         }
 
+        val fabSave = binding.fabSave
+        val fabUpdate = binding.fabUpdate
+
         // Save Note Fab
-        binding.fabSave.setOnClickListener {
+        fabSave.setOnClickListener {
             saveNote()
         }
 
         // Update Note Fab
-        binding.fabUpdate.setOnClickListener {
+        fabUpdate.setOnClickListener {
             updateNote()
+        }
+
+        binding.noteBodyET.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if ((scrollY > oldScrollY + 12 && fabSave.isExtended) && (scrollY > oldScrollY + 12 && fabUpdate.isExtended)) {
+                fabSave.shrink()
+                fabUpdate.shrink()
+            }
+            if ((scrollY < oldScrollY - 12 && !fabSave.isExtended) && (scrollY < oldScrollY - 12 && !fabUpdate.isExtended)) {
+                fabSave.extend()
+                fabUpdate.extend()
+            }
         }
     }
 

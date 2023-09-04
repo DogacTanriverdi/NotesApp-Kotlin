@@ -1,10 +1,12 @@
 package com.dogactnrvrdi.notesapp.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
@@ -55,6 +57,17 @@ class NotesFragment :
         subscribeToObservers()
 
         activity?.addMenuProvider(this)
+
+        val fab = binding.addNoteFab
+
+        binding.notesRV.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+            if (scrollY > oldScrollY + 12 && fab.isExtended) {
+                fab.shrink()
+            }
+            if (scrollY < oldScrollY - 12 && !fab.isExtended) {
+                fab.extend()
+            }
+        }
     }
 
     // RecyclerView Setup
@@ -126,7 +139,6 @@ class NotesFragment :
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
-
         if (newText != null)
             searchNotes(newText)
         return true

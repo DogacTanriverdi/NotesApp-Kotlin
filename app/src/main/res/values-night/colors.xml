@@ -23,4 +23,11 @@
     <color name="custom_toolbar_text_color">#FFFFFFFF</color>
     <color name="custom_fab_color">#524059</color>
     <color name="text_style_color">#FFFFFFFF</color>
+    <color name="custom_stroke_color">#D2B6FF</color>
+
+    <color name="blue_note_color">#4E33FF</color>
+    <color name="red_note_color">#810000</color>
+    <color name="purple_note_color">#AE3B76</color>
+    <color name="green_note_color">#0B8161</color>
+    <color name="orange_note_color">#9A4729</color>
 </resources>

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.ListItemNoteBinding
 import com.dogactnrvrdi.notesapp.model.Note
+import com.dogactnrvrdi.notesapp.view.NotesFragment
 import kotlin.coroutines.coroutineContext
 
 class NoteRecyclerAdapter : RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHolder>() {
@@ -18,6 +19,7 @@ class NoteRecyclerAdapter : RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHol
     class NoteViewHolder(
         private val binding: ListItemNoteBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
 
         fun bind(note: Note, context: Context) {
             binding.apply {

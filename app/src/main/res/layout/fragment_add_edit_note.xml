@@ -73,27 +73,35 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/custom_stroke_color"
+        android:text="@string/save_note"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/custom_fab_color"
         android:contentDescription="@string/floating_action_button"
-        android:src="@drawable/ic_check" />
+        app:icon="@drawable/ic_check" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fabUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="24dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/custom_stroke_color"
+        android:textSize="16sp"
+        android:text="@string/update_note"
         android:layout_marginBottom="72dp"
         android:backgroundTint="@color/custom_fab_color"
         android:contentDescription="@string/floating_action_button"
-        android:src="@drawable/ic_check"
+        app:icon="@drawable/ic_check"
         android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

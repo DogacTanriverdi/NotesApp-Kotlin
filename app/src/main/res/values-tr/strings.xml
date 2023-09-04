@@ -32,4 +32,8 @@
     <string name="italic_button">İtalik yazı butonu</string>
     <string name="underline_button">Altı çizili yazı butonu</string>
     <string name="normal_text_button">Normal yazı butonu</string>
+    <string name="save">Kaydet</string>
+    <string name="new_note">Yeni Not</string>
+    <string name="save_note">Kaydet</string>
+    <string name="update_note">Güncelle</string>
 </resources>

@@ -15,15 +15,20 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addNoteFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:text="@string/new_note"
+        android:textColor="@color/color_text"
+        android:textSize="16sp"
         android:layout_marginEnd="16dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/custom_stroke_color"
         android:layout_marginBottom="32dp"
         android:backgroundTint="@color/custom_fab_color"
         android:contentDescription="@string/floating_action_button"
-        android:src="@drawable/ic_add" />
+        app:icon="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
