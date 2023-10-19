@@ -1,15 +1,13 @@
-package com.dogactnrvrdi.notesapp.activities
+package com.dogactnrvrdi.notesapp.ui
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import com.dogactnrvrdi.notesapp.R
 
-@SuppressLint("CustomSplashScreen")
 class SplashScreen : AppCompatActivity() {
 
     private var runnable = Runnable {}

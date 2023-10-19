@@ -1,25 +1,20 @@
-package com.dogactnrvrdi.notesapp.view
+package com.dogactnrvrdi.notesapp.ui.notes
 
-import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
-import androidx.core.content.ContextCompat
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.dogactnrvrdi.notesapp.R
-import com.dogactnrvrdi.notesapp.adapter.NoteRecyclerAdapter
 import com.dogactnrvrdi.notesapp.databinding.FragmentNotesBinding
-import com.dogactnrvrdi.notesapp.viewmodel.NoteViewModel
+import com.dogactnrvrdi.notesapp.ui.NoteViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,55 +24,60 @@ class NotesFragment :
     SearchView.OnQueryTextListener,
     MenuProvider {
 
-    // Binding
     private var _binding: FragmentNotesBinding? = null
     private val binding get() = _binding!!
 
-    // ViewModel
     private val viewModel: NoteViewModel by viewModels()
 
-    // Adapter
-    private lateinit var noteRecyclerAdapter: NoteRecyclerAdapter
+    private val noteRecyclerAdapter by lazy { NoteRecyclerAdapter() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Binding
         _binding = FragmentNotesBinding.bind(view)
 
-        binding.addNoteFab.setOnClickListener {
-            val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment()
-            findNavController().navigate(action)
+        with(binding) {
+
+            addNoteFab.setOnClickListener {
+                val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment()
+                findNavController().navigate(action)
+            }
+
+            activity?.addMenuProvider(this@NotesFragment)
+
+            notesRV.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+
+                if (scrollY > oldScrollY + 12 && addNoteFab.isExtended) {
+                    addNoteFab.shrink()
+                }
+
+                if (scrollY < oldScrollY - 12 && !addNoteFab.isExtended) {
+                    addNoteFab.extend()
+                }
+            }
         }
 
-        //RecyclerView Setup
         setupRecyclerView()
 
-        // Subscribe to Observers
-        subscribeToObservers()
+        observeData()
+    }
 
-        activity?.addMenuProvider(this)
+    private fun observeData() {
+        viewModel.notes.observe(viewLifecycleOwner) { noteList ->
+            noteRecyclerAdapter.recyclerListDiffer.submitList(noteList)
+        }
+    }
 
-        val fab = binding.addNoteFab
-
-        binding.notesRV.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if (scrollY > oldScrollY + 12 && fab.isExtended) {
-                fab.shrink()
-            }
-            if (scrollY < oldScrollY - 12 && !fab.isExtended) {
-                fab.extend()
+    private fun searchNotes(query: String?) {
+        with(viewModel) {
+            val searchQuery = "%$query%"
+            searchNote(searchQuery).observe(viewLifecycleOwner) { note ->
+                noteRecyclerAdapter.recyclerListDiffer.submitList(note)
             }
         }
     }
 
-    // RecyclerView Setup
     private fun setupRecyclerView() {
-        noteRecyclerAdapter = NoteRecyclerAdapter()
-        binding.notesRV.apply {
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            setHasFixedSize(true)
-            adapter = noteRecyclerAdapter
-        }
+        binding.notesRV.adapter = noteRecyclerAdapter
 
         noteRecyclerAdapter.setOnItemClickListener {
             val action = NotesFragmentDirections.actionNotesFragmentToAddEditNoteFragment(it)
@@ -86,11 +86,10 @@ class NotesFragment :
         setSwipeToDelete()
     }
 
-    // Swipe to Delete
     private fun setSwipeToDelete() {
         val itemTouchCallback = object : ItemTouchHelper.SimpleCallback(
             0,
-            ItemTouchHelper.LEFT
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -119,19 +118,6 @@ class NotesFragment :
         ItemTouchHelper(itemTouchCallback).attachToRecyclerView(binding.notesRV)
     }
 
-    // Subscribe To Observers/*
-    private fun subscribeToObservers() {
-        viewModel.notes.observe(viewLifecycleOwner) { list ->
-            noteRecyclerAdapter.recyclerListDiffer.submitList(list)
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        activity?.removeMenuProvider(this)
-    }
-
     override fun onQueryTextSubmit(query: String?): Boolean {
         if (query != null)
             searchNotes(query)
@@ -144,13 +130,6 @@ class NotesFragment :
         return true
     }
 
-    private fun searchNotes(query: String?) {
-        val searchQuery = "%$query%"
-        viewModel.searchNote(searchQuery).observe(viewLifecycleOwner) { list ->
-            noteRecyclerAdapter.recyclerListDiffer.submitList(list)
-        }
-    }
-
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.home_menu, menu)
         val menuSearch = menu.findItem(R.id.menu_search).actionView as SearchView
@@ -161,5 +140,11 @@ class NotesFragment :
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         return true
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        activity?.removeMenuProvider(this)
     }
 }

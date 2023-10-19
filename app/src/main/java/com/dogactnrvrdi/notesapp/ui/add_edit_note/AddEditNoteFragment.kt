@@ -1,39 +1,31 @@
-package com.dogactnrvrdi.notesapp.view
+package com.dogactnrvrdi.notesapp.ui.add_edit_note
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.View.OnFocusChangeListener
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.FragmentAddEditNoteBinding
-import com.dogactnrvrdi.notesapp.model.Note
-import com.dogactnrvrdi.notesapp.util.Util
-import com.dogactnrvrdi.notesapp.viewmodel.NoteViewModel
+import com.dogactnrvrdi.notesapp.data.model.Note
+import com.dogactnrvrdi.notesapp.common.Util
+import com.dogactnrvrdi.notesapp.ui.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
-    // Binding
     private var _binding: FragmentAddEditNoteBinding? = null
     private val binding get() = _binding!!
 
-    // ViewModel
     private val viewModel: NoteViewModel by viewModels()
 
-    // NavArgs
     private val args: AddEditNoteFragmentArgs by navArgs()
 
-    // Current Note
     private var currentNote: Note? = null
 
-    // Is Saved
     private var isSaved: Boolean = false
 
     private val util = Util()
@@ -41,15 +33,13 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Binding
         _binding = FragmentAddEditNoteBinding.bind(view)
 
-        // Current Note
-        currentNote = args.note
+        with(binding) {
 
-        currentNote?.let { note ->
-            binding.apply {
+            currentNote = args.note
+
+            currentNote?.let { note ->
                 noteTitleET.setText(note.title)
                 noteBodyET.setText(note.description)
                 noteBodyET.requestFocus()
@@ -61,64 +51,60 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
                 fabSave.visibility = View.GONE
                 fabUpdate.visibility = View.VISIBLE
             }
-        }
 
-        val fabSave = binding.fabSave
-        val fabUpdate = binding.fabUpdate
-
-        // Save Note Fab
-        fabSave.setOnClickListener {
-            saveNote()
-        }
-
-        // Update Note Fab
-        fabUpdate.setOnClickListener {
-            updateNote()
-        }
-
-        binding.noteBodyET.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            if ((scrollY > oldScrollY + 12 && fabSave.isExtended) && (scrollY > oldScrollY + 12 && fabUpdate.isExtended)) {
-                fabSave.shrink()
-                fabUpdate.shrink()
+            fabSave.setOnClickListener {
+                saveNote()
             }
-            if ((scrollY < oldScrollY - 12 && !fabSave.isExtended) && (scrollY < oldScrollY - 12 && !fabUpdate.isExtended)) {
-                fabSave.extend()
-                fabUpdate.extend()
+
+            fabUpdate.setOnClickListener {
+                updateNote()
+            }
+
+            noteBodyET.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if ((scrollY > oldScrollY + 12 && fabSave.isExtended) && (scrollY > oldScrollY + 12 && fabUpdate.isExtended)) {
+                    fabSave.shrink()
+                    fabUpdate.shrink()
+                }
+                if ((scrollY < oldScrollY - 12 && !fabSave.isExtended) && (scrollY < oldScrollY - 12 && !fabUpdate.isExtended)) {
+                    fabSave.extend()
+                    fabUpdate.extend()
+                }
             }
         }
     }
 
     private fun saveNote() {
-        binding.apply {
-            val title = noteTitleET.text?.trim().toString()
-            val description = noteBodyET.text?.trim().toString()
+        with(binding) {
+            with(viewModel) {
 
-            if (title.isEmpty() || description.isEmpty()) {
-                util.toastLong(
-                    requireContext(),
-                    getString(R.string.notes_cannot_be_empty)
-                )
-                return
-            }
+                val title = noteTitleET.text?.trim().toString()
+                val description = noteBodyET.text?.trim().toString()
 
-            currentNote?.let {
-                if (title == it.title && description == it.description) {
+                if (title.isEmpty() || description.isEmpty()) {
+                    util.toastLong(
+                        requireContext(),
+                        getString(R.string.notes_cannot_be_empty)
+                    )
                     return
                 }
-            }
 
-            val newNote = if (currentNote == null) {
-                Note(title, description)
-            } else {
-                currentNote?.apply {
-                    this.title = title
-                    this.description = description
-                    this.created = System.currentTimeMillis()
+                currentNote?.let {
+                    if (title == it.title && description == it.description) {
+                        return
+                    }
                 }
-            }
 
-            if (newNote != null) {
-                viewModel.insertNote(newNote)
+                val newNote = if (currentNote == null) {
+                    Note(title, description)
+                } else {
+                    currentNote!!.apply {
+                        this.title = title
+                        this.description = description
+                        this.created = System.currentTimeMillis()
+                    }
+                }
+
+                insertNote(newNote)
                 util.toastShort(
                     requireContext(),
                     getString(R.string.saved)
@@ -130,7 +116,7 @@ class AddEditNoteFragment : Fragment(R.layout.fragment_add_edit_note) {
     }
 
     private fun updateNote() {
-        binding.apply {
+        with(binding) {
             val title = noteTitleET.text?.trim().toString()
             val description = noteBodyET.text?.trim().toString()
 

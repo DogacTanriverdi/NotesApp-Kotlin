@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.model
+package com.dogactnrvrdi.notesapp.data.model
 
 import android.os.Parcelable
 import androidx.room.Entity
@@ -13,7 +13,7 @@ data class Note(
     var description: String,
     var created: Long = System.currentTimeMillis(),
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Int? = null,
 ) : Parcelable {
     val createdDateFormatted: String
         get() = DateFormat.getDateTimeInstance().format(created)

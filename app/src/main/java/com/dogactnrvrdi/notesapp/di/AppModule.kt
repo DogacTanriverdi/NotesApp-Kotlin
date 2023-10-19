@@ -2,7 +2,10 @@ package com.dogactnrvrdi.notesapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.dogactnrvrdi.notesapp.db.NoteDatabase
+import com.dogactnrvrdi.notesapp.data.repo.NoteRepositoryImpl
+import com.dogactnrvrdi.notesapp.data.source.local.NoteDao
+import com.dogactnrvrdi.notesapp.data.source.local.NoteDatabase
+import com.dogactnrvrdi.notesapp.domain.NoteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +30,8 @@ object AppModule {
     @Singleton
     @Provides
     fun provideNoteDao(db: NoteDatabase) = db.getNoteDao()
+
+    @Singleton
+    @Provides
+    fun provideNoteRepository(dao: NoteDao): NoteRepository = NoteRepositoryImpl(dao)
 }

@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.util
+package com.dogactnrvrdi.notesapp.common
 
 import android.content.Context
 import android.widget.Toast
