@@ -21,7 +21,7 @@ class NoteRecyclerAdapter : RecyclerView.Adapter<NoteRecyclerAdapter.NoteViewHol
                 noteTitleTV.text = note?.title
                 noteDescriptionTV.text = note?.description
                 val lastModifiedString =
-                    context.getString(R.string.last_modified_capital_caps) + " " +
+                    context.getString(R.string.last_modified) + " " +
                             note?.createdDateFormatted
                 noteCreatedDateTV.text = lastModifiedString
             }

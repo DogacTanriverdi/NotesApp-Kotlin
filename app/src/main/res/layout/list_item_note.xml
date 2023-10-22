@@ -9,7 +9,7 @@
     android:layout_marginVertical="8dp"
     android:orientation="vertical"
     android:elevation="5dp"
-    android:background="@drawable/shadow">
+    android:background="@drawable/bg_note">
 
     <TextView
         android:id="@+id/noteTitleTV"
@@ -23,7 +23,7 @@
         android:maxLines="2"
         android:text="@string/title"
         android:textAlignment="textStart"
-        android:textColor="@color/color_text"
+        android:textColor="@color/custom_text_color"
         android:textSize="20sp" />
 
     <TextView
@@ -38,7 +38,7 @@
         android:fontFamily="@font/montserrat"
         android:text="@string/description"
         android:textAlignment="textStart"
-        android:textColor="@color/color_text"
+        android:textColor="@color/custom_text_color"
         android:textSize="16sp" />
 
     <TextView
