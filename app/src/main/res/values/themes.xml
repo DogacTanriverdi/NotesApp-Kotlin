@@ -2,6 +2,7 @@
 
     <style name="Theme.NotesApp" parent="Theme.Material3.Light.NoActionBar">
         <item name="android:statusBarColor">@color/custom_statusbar_color</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="CustomToolBarStyle">
