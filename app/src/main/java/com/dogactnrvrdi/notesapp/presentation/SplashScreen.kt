@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.ui
+package com.dogactnrvrdi.notesapp.presentation
 
 import android.content.Intent
 import android.os.Bundle

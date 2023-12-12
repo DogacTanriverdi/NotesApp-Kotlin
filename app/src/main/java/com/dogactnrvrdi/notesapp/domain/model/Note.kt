@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.data.model
+package com.dogactnrvrdi.notesapp.domain.model
 
 import android.os.Parcelable
 import androidx.room.Entity

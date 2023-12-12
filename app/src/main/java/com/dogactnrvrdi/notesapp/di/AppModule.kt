@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.dogactnrvrdi.notesapp.data.repo.NoteRepositoryImpl
 import com.dogactnrvrdi.notesapp.data.source.local.NoteDao
 import com.dogactnrvrdi.notesapp.data.source.local.NoteDatabase
-import com.dogactnrvrdi.notesapp.domain.NoteRepository
+import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

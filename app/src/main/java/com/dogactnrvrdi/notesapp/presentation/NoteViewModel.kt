@@ -1,8 +1,8 @@
-package com.dogactnrvrdi.notesapp.ui
+package com.dogactnrvrdi.notesapp.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dogactnrvrdi.notesapp.data.model.Note
+import com.dogactnrvrdi.notesapp.domain.model.Note
 import com.dogactnrvrdi.notesapp.data.repo.NoteRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

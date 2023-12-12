@@ -1,7 +1,7 @@
-package com.dogactnrvrdi.notesapp.domain
+package com.dogactnrvrdi.notesapp.domain.repo
 
 import androidx.lifecycle.LiveData
-import com.dogactnrvrdi.notesapp.data.model.Note
+import com.dogactnrvrdi.notesapp.domain.model.Note
 
 interface NoteRepository {
 
