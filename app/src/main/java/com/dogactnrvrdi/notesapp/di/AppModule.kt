@@ -8,6 +8,7 @@ import com.dogactnrvrdi.notesapp.data.source.local.NoteDatabase
 import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
 import com.dogactnrvrdi.notesapp.domain.use_case.AddNoteUseCase
 import com.dogactnrvrdi.notesapp.domain.use_case.DeleteNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.use_case.GetNoteUseCase
 import com.dogactnrvrdi.notesapp.domain.use_case.GetNotesUseCase
 import com.dogactnrvrdi.notesapp.domain.use_case.NoteUseCases
 import dagger.Module
@@ -47,6 +48,7 @@ object AppModule {
         NoteUseCases(
             getNotes = GetNotesUseCase(repo),
             deleteNote = DeleteNoteUseCase(repo),
-            addNote = AddNoteUseCase(repo)
+            addNote = AddNoteUseCase(repo),
+            getNote = GetNoteUseCase(repo)
         )
 }

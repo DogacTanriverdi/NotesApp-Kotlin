@@ -5,8 +5,7 @@ import com.dogactnrvrdi.notesapp.common.OrderType
 import com.dogactnrvrdi.notesapp.domain.model.Note
 import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetNotesUseCase @Inject constructor(
@@ -14,8 +13,8 @@ class GetNotesUseCase @Inject constructor(
 ) {
     operator fun invoke(
         noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)
-    ): Flow<List<Note>> = flow {
-        repo.getNotes().onEach { notes ->
+    ): Flow<List<Note>> =
+        repo.getNotes().map { notes ->
             when (noteOrder.orderType) {
 
                 is OrderType.Ascending -> {
@@ -35,5 +34,4 @@ class GetNotesUseCase @Inject constructor(
                 }
             }
         }
-    }
 }

@@ -21,11 +21,11 @@ class NotesViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = mutableStateOf(NotesState())
-    val state: State<NotesState> get() = _state
+    val state: State<NotesState> = _state
 
     private var recentlyDeletedNote: Note? = null
 
-    private var job: Job? = null
+    private var getNotesJob: Job? = null
 
     init {
         getNotes(NoteOrder.Date(OrderType.Descending))
@@ -33,28 +33,28 @@ class NotesViewModel @Inject constructor(
 
     fun onEvent(event: NotesEvent) {
         when (event) {
-
             is NotesEvent.Order -> {
-
                 if (state.value.noteOrder::class == event.noteOrder::class &&
                     state.value.noteOrder.orderType == event.noteOrder.orderType
-                ) return
-
+                ) {
+                    return
+                }
                 getNotes(event.noteOrder)
             }
-
-            is NotesEvent.DeleteNote -> viewModelScope.launch {
-                noteUseCases.deleteNote(event.note)
-                recentlyDeletedNote = event.note
+            is NotesEvent.DeleteNote -> {
+                viewModelScope.launch {
+                    noteUseCases.deleteNote(event.note)
+                    recentlyDeletedNote = event.note
+                }
             }
-
-            is NotesEvent.RestoreNote -> viewModelScope.launch {
-                noteUseCases.addNote(recentlyDeletedNote ?: return@launch)
-                recentlyDeletedNote = null
+            is NotesEvent.RestoreNote -> {
+                viewModelScope.launch {
+                    noteUseCases.addNote(recentlyDeletedNote ?: return@launch)
+                    recentlyDeletedNote = null
+                }
             }
-
             is NotesEvent.ToggleOrderSection -> {
-                _state.value = _state.value.copy(
+                _state.value = state.value.copy(
                     isOrderSectionVisible = !state.value.isOrderSectionVisible
                 )
             }
@@ -62,12 +62,14 @@ class NotesViewModel @Inject constructor(
     }
 
     private fun getNotes(noteOrder: NoteOrder) {
-        job?.cancel()
-        job = noteUseCases.getNotes(noteOrder).onEach { notes ->
-            _state.value = _state.value.copy(
-                notes = notes,
-                noteOrder = noteOrder
-            )
-        }.launchIn(viewModelScope)
+        getNotesJob?.cancel()
+        getNotesJob = noteUseCases.getNotes(noteOrder)
+            .onEach { notes ->
+                _state.value = state.value.copy(
+                    notes = notes,
+                    noteOrder = noteOrder
+                )
+            }
+            .launchIn(viewModelScope)
     }
 }

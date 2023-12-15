@@ -22,9 +22,6 @@ class SplashScreen : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        val animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in)
-        binding.logoOpen.startAnimation(animFadeIn)
-
         supportActionBar?.hide()
 
         runnable = Runnable {
@@ -35,6 +32,6 @@ class SplashScreen : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        handler.postDelayed(runnable, 1500)
+        handler.postDelayed(runnable, 500)
     }
 }

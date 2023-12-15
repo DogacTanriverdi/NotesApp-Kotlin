@@ -3,6 +3,7 @@ package com.dogactnrvrdi.notesapp.domain.model
 import androidx.compose.ui.graphics.Color
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.dogactnrvrdi.notesapp.R
 
 @Entity(tableName = "notes")
 data class Note(
@@ -14,7 +15,7 @@ data class Note(
     val id: Int? = null,
 ) {
     companion object {
-        val noteColors = listOf(Color.Magenta, Color.Blue, Color.Green, Color.Yellow, Color.Cyan)
+        val noteColors = listOf(Color(0xFFEB9AFF), Color.Blue, Color.Green, Color.Yellow, Color.Cyan)
     }
 }
 
