@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
-import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.databinding.ActivitySplashScreenBinding
 
 class SplashScreen : AppCompatActivity() {
@@ -32,6 +30,7 @@ class SplashScreen : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        handler.postDelayed(runnable, 500)
+        handler.postDelayed(runnable, 1500)
     }
 }
+

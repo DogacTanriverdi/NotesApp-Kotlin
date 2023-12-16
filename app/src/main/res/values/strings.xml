@@ -25,4 +25,6 @@
     <string name="new_note">New Note</string>
     <string name="save">Save</string>
     <string name="update">Update</string>
+    <string name="sort_button">Sort button</string>
+    <string name="back_button">Back button</string>
 </resources>

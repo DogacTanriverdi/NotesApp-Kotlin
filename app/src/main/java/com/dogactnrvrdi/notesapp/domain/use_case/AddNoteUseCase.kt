@@ -12,13 +12,11 @@ class AddNoteUseCase @Inject constructor(
     @Throws(InvalidNoteException::class)
     suspend operator fun invoke(note: Note) {
 
-        if (note.title.isBlank()) {
+        if (note.title.isBlank())
             throw InvalidNoteException("Title cannot be empty!")
-        }
 
-        if (note.content.isBlank()) {
+        if (note.description.isBlank())
             throw InvalidNoteException("Content cannot be empty!")
-        }
 
         repo.insertNote(note)
     }

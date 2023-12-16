@@ -27,8 +27,11 @@ class AddEditNoteViewModel @Inject constructor(
     private val _noteContent = mutableStateOf(NoteTextFieldState(hint = "Type something..."))
     val noteContent: State<NoteTextFieldState> get() = _noteContent
 
-    private val _noteColor = mutableStateOf(Note.noteColors[0].toArgb())
+    private val _noteColor = mutableStateOf(Note.noteColors.random().toArgb())
     val noteColor: State<Int> get() = _noteColor
+
+    private val _colorState = mutableStateOf(ColorState())
+    val colorState: State<ColorState> = _colorState
 
     private val _eventFlow = MutableSharedFlow<UIEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
@@ -48,11 +51,11 @@ class AddEditNoteViewModel @Inject constructor(
                         )
 
                         _noteContent.value = noteContent.value.copy(
-                            text = note.content,
+                            text = note.description,
                             isHintVisible = false
                         )
 
-                        _noteColor.value = noteColor.value
+                        _noteColor.value = note.color
                     }
                 }
             }
@@ -89,7 +92,7 @@ class AddEditNoteViewModel @Inject constructor(
                     noteUseCases.addNote(
                         Note(
                             title = noteTitle.value.text,
-                            content = noteContent.value.text,
+                            description = noteContent.value.text,
                             created = System.currentTimeMillis(),
                             color = noteColor.value,
                             id = currentNoteId
@@ -104,6 +107,12 @@ class AddEditNoteViewModel @Inject constructor(
                     )
                 }
             }
+
+            is AddEditNoteEvent.ToggleColorSection -> {
+                _colorState.value = colorState.value.copy(
+                    isColorSectionVisible = !colorState.value.isColorSectionVisible
+                )
+            }
         }
     }
 
@@ -111,4 +120,8 @@ class AddEditNoteViewModel @Inject constructor(
         data class ShowSnackbar(val message: String) : UIEvent()
         data object SaveNote : UIEvent()
     }
+
+    data class ColorState(
+        val isColorSectionVisible: Boolean = false
+    )
 }

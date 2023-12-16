@@ -2,14 +2,17 @@ package com.dogactnrvrdi.notesapp.presentation.add_edit_note.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun TransparentHintTextField(
@@ -31,16 +34,18 @@ fun TransparentHintTextField(
             textStyle = textStyle,
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 10.dp)
                 .onFocusChanged {
                     onFocusChange(it)
-                }
+                },
         )
 
         if (isHintVisible)
             Text(
+                modifier = Modifier.padding(start = 10.dp),
                 text = hint,
                 style = textStyle,
-                color = Color.DarkGray
+                color = MaterialTheme.colorScheme.onError
             )
     }
 }

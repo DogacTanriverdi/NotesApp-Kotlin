@@ -3,7 +3,7 @@ package com.dogactnrvrdi.notesapp.presentation.notes.components
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
@@ -28,13 +28,15 @@ fun DefaultRadioButton(
             selected = selected,
             onClick = onSelect,
             colors = RadioButtonDefaults.colors(
-                selectedColor = MaterialTheme.colors.primary,
-                unselectedColor = MaterialTheme.colors.onBackground
+                selectedColor = MaterialTheme.colorScheme.surface,
+                unselectedColor = MaterialTheme.colorScheme.onError
             )
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Text(text = text, style = MaterialTheme.typography.body1)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.surface
+        )
     }
 }

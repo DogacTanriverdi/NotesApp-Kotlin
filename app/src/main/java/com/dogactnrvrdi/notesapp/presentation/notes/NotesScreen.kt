@@ -22,7 +22,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
@@ -34,8 +34,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -62,17 +62,22 @@ fun NotesScreen(
                 onClick = {
                     navController.navigate(Screen.AddEditNoteScreen.route)
                 },
-                backgroundColor = MaterialTheme.colors.primary,
-                shape = RoundedCornerShape(10.dp)
+                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+                shape = RoundedCornerShape(10.dp),
+                contentColor = MaterialTheme.colorScheme.surface
             ) {
-                Icon(imageVector = Icons.Default.Add, contentDescription = "Add note.")
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = stringResource(id = R.string.add_new_note_button)
+                )
             }
         },
         scaffoldState = scaffoldState,
-        modifier = Modifier.background(colorResource(id = R.color.custom_background))
+        modifier = Modifier
     ) {
         Column(
             modifier = Modifier
+                .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
         ) {
 
@@ -86,8 +91,9 @@ fun NotesScreen(
             ) {
 
                 Text(
-                    text = "Notes",
-                    style = MaterialTheme.typography.h5,
+                    text = stringResource(id = R.string.notes),
+                    color = MaterialTheme.colorScheme.surface,
+                    style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier.padding(start = 15.dp)
                 )
 
@@ -98,7 +104,8 @@ fun NotesScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Sort,
-                        contentDescription = "Sort"
+                        contentDescription = stringResource(id = R.string.sort_button),
+                        tint = MaterialTheme.colorScheme.surface
                     )
                 }
             }
@@ -128,7 +135,7 @@ fun NotesScreen(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 5.dp, end = 5.dp),
+                            .padding(start = 10.dp, end = 10.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         notes.forEach { note ->

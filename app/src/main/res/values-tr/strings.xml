@@ -25,4 +25,6 @@
     <string name="new_note">Yeni Not</string>
     <string name="save">Kaydet</string>
     <string name="update">Güncelle</string>
+    <string name="sort_button">Sıralama butonu</string>
+    <string name="back_button">Geri gelme butonu</string>
 </resources>
