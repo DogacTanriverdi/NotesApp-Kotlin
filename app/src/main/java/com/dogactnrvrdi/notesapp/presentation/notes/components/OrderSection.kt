@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.common.NoteOrder
 import com.dogactnrvrdi.notesapp.common.OrderType
 
@@ -26,7 +28,7 @@ fun OrderSection(
         ) {
 
             DefaultRadioButton(
-                text = "Title",
+                text = stringResource(id = R.string.title),
                 selected = noteOrder is NoteOrder.Title,
                 onSelect = { onOrderChange(NoteOrder.Title(noteOrder.orderType)) }
             )
@@ -34,7 +36,7 @@ fun OrderSection(
             Spacer(modifier = Modifier.width(8.dp))
 
             DefaultRadioButton(
-                text = "Date",
+                text = stringResource(id = R.string.date),
                 selected = noteOrder is NoteOrder.Date,
                 onSelect = { onOrderChange(NoteOrder.Date(noteOrder.orderType)) }
             )
@@ -42,7 +44,7 @@ fun OrderSection(
             Spacer(modifier = Modifier.width(8.dp))
 
             DefaultRadioButton(
-                text = "Color",
+                text = stringResource(id = R.string.color),
                 selected = noteOrder is NoteOrder.Color,
                 onSelect = { onOrderChange(NoteOrder.Color(noteOrder.orderType)) }
             )
@@ -57,7 +59,7 @@ fun OrderSection(
         ) {
 
             DefaultRadioButton(
-                text = "Ascending",
+                text = stringResource(id = R.string.ascending),
                 selected = noteOrder.orderType is OrderType.Ascending,
                 onSelect = {
                     onOrderChange(noteOrder.copy(OrderType.Ascending))
@@ -67,7 +69,7 @@ fun OrderSection(
             Spacer(modifier = Modifier.width(8.dp))
 
             DefaultRadioButton(
-                text = "Descending",
+                text = stringResource(id = R.string.descending),
                 selected = noteOrder.orderType is OrderType.Descending,
                 onSelect = {
                     onOrderChange(noteOrder.copy(OrderType.Descending))

@@ -37,6 +37,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -51,7 +52,9 @@ import kotlinx.coroutines.flow.collectLatest
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AddEditNoteScreen(
-    navController: NavController, noteColor: Int, viewModel: AddEditNoteViewModel = hiltViewModel()
+    navController: NavController,
+    noteColor: Int,
+    viewModel: AddEditNoteViewModel = hiltViewModel()
 ) {
 
     val titleState = viewModel.noteTitle.value
@@ -59,6 +62,8 @@ fun AddEditNoteScreen(
     val colorState = viewModel.colorState.value
 
     val scaffoldState = rememberScaffoldState()
+
+    val context = LocalContext.current
 
     val noteBackgroundAnimatable = remember {
         Animatable(
@@ -73,7 +78,8 @@ fun AddEditNoteScreen(
             when (event) {
 
                 is AddEditNoteViewModel.UIEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(message = event.message)
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = context.getString(event.message.toInt()))
                 }
 
                 is AddEditNoteViewModel.UIEvent.SaveNote -> {
@@ -143,7 +149,7 @@ fun AddEditNoteScreen(
                 }) {
                     Icon(
                         imageVector = Icons.Default.ColorLens,
-                        contentDescription = stringResource(R.string.sort_button),
+                        contentDescription = stringResource(R.string.select_color_button),
                         tint = MaterialTheme.colorScheme.surface
                     )
                 }
@@ -177,7 +183,7 @@ fun AddEditNoteScreen(
             TransparentHintTextField(
                 modifier = Modifier,
                 text = titleState.text,
-                hint = titleState.hint,
+                hint = stringResource(id = titleState.hint),
                 onValueChange = {
                     viewModel.onEvent(AddEditNoteEvent.EnteredTitle(it))
                 },
@@ -196,7 +202,7 @@ fun AddEditNoteScreen(
 
             TransparentHintTextField(
                 text = contentState.text,
-                hint = contentState.hint,
+                hint = stringResource(id = contentState.hint),
                 onValueChange = {
                     viewModel.onEvent(AddEditNoteEvent.EnteredContent(it))
                 },

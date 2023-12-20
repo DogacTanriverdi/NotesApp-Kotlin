@@ -6,9 +6,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.domain.model.InvalidNoteException
 import com.dogactnrvrdi.notesapp.domain.model.Note
 import com.dogactnrvrdi.notesapp.domain.use_case.NoteUseCases
+import com.dogactnrvrdi.notesapp.presentation.notes.NotesState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -21,10 +23,10 @@ class AddEditNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _noteTitle = mutableStateOf(NoteTextFieldState(hint = "Title"))
+    private val _noteTitle = mutableStateOf(NoteTextFieldState(hint = R.string.title))
     val noteTitle: State<NoteTextFieldState> get() = _noteTitle
 
-    private val _noteContent = mutableStateOf(NoteTextFieldState(hint = "Type something..."))
+    private val _noteContent = mutableStateOf(NoteTextFieldState(hint = R.string.type_something))
     val noteContent: State<NoteTextFieldState> get() = _noteContent
 
     private val _noteColor = mutableStateOf(Note.noteColors.random().toArgb())

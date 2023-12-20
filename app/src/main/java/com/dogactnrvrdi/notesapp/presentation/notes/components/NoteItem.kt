@@ -18,8 +18,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.domain.model.Note
 
 @Composable
@@ -74,7 +76,7 @@ fun NoteItem(
         ) {
             Icon(
                 imageVector = Icons.Default.Delete,
-                contentDescription = "Delete note.",
+                contentDescription = stringResource(id = R.string.delete_note),
                 tint = MaterialTheme.colorScheme.surface
             )
         }

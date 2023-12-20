@@ -34,6 +34,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -55,6 +56,8 @@ fun NotesScreen(
     val state = viewModel.state.value
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
+    val context = LocalContext.current
 
     Scaffold(
         floatingActionButton = {
@@ -154,8 +157,8 @@ fun NotesScreen(
                                     scope.launch {
 
                                         val result = scaffoldState.snackbarHostState.showSnackbar(
-                                            message = "Note deleted",
-                                            actionLabel = "Undo"
+                                            message = context.getString(R.string.note_deleted_successfully),
+                                            actionLabel = context.getString(R.string.undo)
                                         )
 
                                         if (result == SnackbarResult.ActionPerformed) {

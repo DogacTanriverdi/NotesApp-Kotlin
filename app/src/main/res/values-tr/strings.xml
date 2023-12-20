@@ -27,4 +27,12 @@
     <string name="update">Güncelle</string>
     <string name="sort_button">Sıralama butonu</string>
     <string name="back_button">Geri gelme butonu</string>
+    <string name="title_cannot_be_empty">Başlık boş olamaz!</string>
+    <string name="content_cannot_be_empty">İçerik boş olamaz!</string>
+    <string name="delete_note">Notu silme butonu</string>
+    <string name="date">Tarih</string>
+    <string name="color">Renk</string>
+    <string name="ascending">Artan</string>
+    <string name="descending">Azalan</string>
+    <string name="select_color_button">Renk seçme butonu</string>
 </resources>
