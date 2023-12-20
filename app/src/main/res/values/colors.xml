@@ -2,7 +2,7 @@
 <resources>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
-    <color name="custom_background">#FAF7FF</color>
+    <color name="custom_background">#FFFAF7FF</color>
     <color name="custom_purple">#EB9AFF</color>
     <color name="custom_text_color">#FF000000</color>
     <color name="text_cursor_color">#000000</color>

@@ -5,7 +5,12 @@ import androidx.room.Room
 import com.dogactnrvrdi.notesapp.data.repo.NoteRepositoryImpl
 import com.dogactnrvrdi.notesapp.data.source.local.NoteDao
 import com.dogactnrvrdi.notesapp.data.source.local.NoteDatabase
-import com.dogactnrvrdi.notesapp.domain.NoteRepository
+import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
+import com.dogactnrvrdi.notesapp.domain.use_case.AddNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.use_case.DeleteNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.use_case.GetNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.use_case.GetNotesUseCase
+import com.dogactnrvrdi.notesapp.domain.use_case.NoteUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,9 +34,23 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideNoteDao(db: NoteDatabase) = db.getNoteDao()
+    fun provideNoteDao(db: NoteDatabase) =
+        db.getNoteDao()
 
     @Singleton
     @Provides
-    fun provideNoteRepository(dao: NoteDao): NoteRepository = NoteRepositoryImpl(dao)
+    fun provideNoteRepository(dao: NoteDao): NoteRepository =
+        NoteRepositoryImpl(dao)
+
+    @Singleton
+    @Provides
+    fun provideNoteUseCases(
+        repo: NoteRepository
+    ): NoteUseCases =
+        NoteUseCases(
+            getNotes = GetNotesUseCase(repo),
+            deleteNote = DeleteNoteUseCase(repo),
+            addNote = AddNoteUseCase(repo),
+            getNote = GetNoteUseCase(repo)
+        )
 }
