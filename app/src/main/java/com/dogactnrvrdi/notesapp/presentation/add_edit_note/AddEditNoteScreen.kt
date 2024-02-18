@@ -19,17 +19,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material3.MaterialTheme
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Save
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -79,7 +82,8 @@ fun AddEditNoteScreen(
 
                 is AddEditNoteViewModel.UIEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
-                        message = context.getString(event.message.toInt()))
+                        message = context.getString(event.message.toInt())
+                    )
                 }
 
                 is AddEditNoteViewModel.UIEvent.SaveNote -> {
@@ -93,7 +97,7 @@ fun AddEditNoteScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.onEvent(AddEditNoteEvent.SaveNote)
+                    viewModel.saveNote()
                 },
                 backgroundColor = MaterialTheme.colorScheme.primaryContainer,
                 shape = RoundedCornerShape(10.dp),
@@ -130,7 +134,7 @@ fun AddEditNoteScreen(
                         navController.navigateUp()
                     }) {
                         Icon(
-                            imageVector = Icons.Default.ArrowBack,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back_button),
                             tint = MaterialTheme.colorScheme.surface
                         )
@@ -145,7 +149,7 @@ fun AddEditNoteScreen(
                 }
 
                 IconButton(onClick = {
-                    viewModel.onEvent(AddEditNoteEvent.ToggleColorSection)
+                    viewModel.toggleColorSection()
                 }) {
                     Icon(
                         imageVector = Icons.Default.ColorLens,
@@ -185,10 +189,10 @@ fun AddEditNoteScreen(
                 text = titleState.text,
                 hint = stringResource(id = titleState.hint),
                 onValueChange = {
-                    viewModel.onEvent(AddEditNoteEvent.EnteredTitle(it))
+                    viewModel.enteredTitle(it)
                 },
                 onFocusChange = {
-                    viewModel.onEvent(AddEditNoteEvent.ChangeTitleFocus(it))
+                    viewModel.changeTitleFocus(it)
                 },
                 isHintVisible = titleState.isHintVisible,
                 singleLine = true,
@@ -204,10 +208,10 @@ fun AddEditNoteScreen(
                 text = contentState.text,
                 hint = stringResource(id = contentState.hint),
                 onValueChange = {
-                    viewModel.onEvent(AddEditNoteEvent.EnteredContent(it))
+                    viewModel.enteredContent(it)
                 },
                 onFocusChange = {
-                    viewModel.onEvent(AddEditNoteEvent.ChangeContentFocus(it))
+                    viewModel.changeContentFocus(it)
                 },
                 isHintVisible = contentState.isHintVisible,
                 textStyle = TextStyle(
