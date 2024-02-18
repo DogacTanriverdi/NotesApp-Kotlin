@@ -19,16 +19,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Sort
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -102,11 +106,11 @@ fun NotesScreen(
 
                 IconButton(
                     onClick = {
-                        viewModel.onEvent(NotesEvent.ToggleOrderSection)
+                        viewModel.toggleOrderSection()
                     },
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Sort,
+                        imageVector = Icons.AutoMirrored.Default.Sort,
                         contentDescription = stringResource(id = R.string.sort_button),
                         tint = MaterialTheme.colorScheme.surface
                     )
@@ -124,8 +128,8 @@ fun NotesScreen(
                         .fillMaxWidth()
                         .padding(vertical = 16.dp),
                     noteOrder = state.noteOrder,
-                    onOrderChange = {
-                        viewModel.onEvent(NotesEvent.Order(it))
+                    onOrderChange = { noteOrder ->
+                        viewModel.order(noteOrder)
                     }
                 )
             }
@@ -153,7 +157,7 @@ fun NotesScreen(
                                         )
                                     },
                                 onDeleteClick = {
-                                    viewModel.onEvent(NotesEvent.DeleteNote(note))
+                                    viewModel.deleteNote(note)
                                     scope.launch {
 
                                         val result = scaffoldState.snackbarHostState.showSnackbar(
@@ -162,7 +166,7 @@ fun NotesScreen(
                                         )
 
                                         if (result == SnackbarResult.ActionPerformed) {
-                                            viewModel.onEvent(NotesEvent.RestoreNote)
+                                            viewModel.restoreNote()
                                         }
                                     }
                                 }

@@ -31,36 +31,6 @@ class NotesViewModel @Inject constructor(
         getNotes(NoteOrder.Date(OrderType.Descending))
     }
 
-    fun onEvent(event: NotesEvent) {
-        when (event) {
-            is NotesEvent.Order -> {
-                if (state.value.noteOrder::class == event.noteOrder::class &&
-                    state.value.noteOrder.orderType == event.noteOrder.orderType
-                ) {
-                    return
-                }
-                getNotes(event.noteOrder)
-            }
-            is NotesEvent.DeleteNote -> {
-                viewModelScope.launch {
-                    noteUseCases.deleteNote(event.note)
-                    recentlyDeletedNote = event.note
-                }
-            }
-            is NotesEvent.RestoreNote -> {
-                viewModelScope.launch {
-                    noteUseCases.addNote(recentlyDeletedNote ?: return@launch)
-                    recentlyDeletedNote = null
-                }
-            }
-            is NotesEvent.ToggleOrderSection -> {
-                _state.value = state.value.copy(
-                    isOrderSectionVisible = !state.value.isOrderSectionVisible
-                )
-            }
-        }
-    }
-
     private fun getNotes(noteOrder: NoteOrder) {
         getNotesJob?.cancel()
         getNotesJob = noteUseCases.getNotes(noteOrder)
@@ -71,5 +41,34 @@ class NotesViewModel @Inject constructor(
                 )
             }
             .launchIn(viewModelScope)
+    }
+
+    fun toggleOrderSection() {
+        _state.value = state.value.copy(
+            isOrderSectionVisible = !state.value.isOrderSectionVisible
+        )
+    }
+
+    fun restoreNote() {
+        viewModelScope.launch {
+            noteUseCases.addNote(recentlyDeletedNote ?: return@launch)
+            recentlyDeletedNote = null
+        }
+    }
+
+    fun deleteNote(note: Note) {
+        viewModelScope.launch {
+            noteUseCases.deleteNote(note)
+            recentlyDeletedNote = note
+        }
+    }
+
+    fun order(noteOrder: NoteOrder) {
+        if (state.value.noteOrder::class == noteOrder::class &&
+            state.value.noteOrder.orderType == noteOrder.orderType
+        ) {
+            return
+        }
+        getNotes(noteOrder)
     }
 }
