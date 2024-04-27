@@ -22,6 +22,7 @@
     <string name="notebook_logo">Not defterim logosu</string>
     <string name="search">Ara</string>
     <string name="search_in_notes">Notlarda ara…</string>
+    <string name="search_button">Arama butonu</string>
     <string name="new_note">Yeni Not</string>
     <string name="save">Kaydet</string>
     <string name="update">Güncelle</string>

@@ -27,6 +27,8 @@ class NotesViewModel @Inject constructor(
 
     private var getNotesJob: Job? = null
 
+    private var searchNoteJob: Job? = null
+
     init {
         getNotes(NoteOrder.Date(OrderType.Descending))
     }
@@ -41,6 +43,23 @@ class NotesViewModel @Inject constructor(
                 )
             }
             .launchIn(viewModelScope)
+    }
+
+    fun searchNote(query: String, noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)) {
+        searchNoteJob?.cancel()
+        searchNoteJob = noteUseCases.searchNote("%$query%", noteOrder)
+            .onEach { notes ->
+                _state.value = state.value.copy(
+                    notes = notes,
+                    noteOrder = noteOrder
+                )
+            }.launchIn(viewModelScope)
+    }
+
+    fun searchSection() {
+        _state.value = state.value.copy(
+            isSearchSectionVisible = !state.value.isSearchSectionVisible
+        )
     }
 
     fun toggleOrderSection() {

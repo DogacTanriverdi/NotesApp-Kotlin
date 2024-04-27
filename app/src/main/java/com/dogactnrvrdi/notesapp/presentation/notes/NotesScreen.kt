@@ -21,21 +21,27 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.SnackbarResult
-import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Search
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -62,6 +68,8 @@ fun NotesScreen(
     val scope = rememberCoroutineScope()
 
     val context = LocalContext.current
+
+    var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
         floatingActionButton = {
@@ -104,15 +112,64 @@ fun NotesScreen(
                     modifier = Modifier.padding(start = 15.dp)
                 )
 
-                IconButton(
-                    onClick = {
-                        viewModel.toggleOrderSection()
-                    },
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(colorResource(id = R.color.custom_toolbar_color))
+                        .height(70.dp),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Default.Sort,
-                        contentDescription = stringResource(id = R.string.sort_button),
-                        tint = MaterialTheme.colorScheme.surface
+
+                    IconButton(
+                        onClick = {
+                            viewModel.searchSection()
+                        }) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = stringResource(id = R.string.search_button),
+                            tint = MaterialTheme.colorScheme.surface
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            viewModel.toggleOrderSection()
+                        },
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Default.Sort,
+                            contentDescription = stringResource(id = R.string.sort_button),
+                            tint = MaterialTheme.colorScheme.surface
+                        )
+                    }
+                }
+            }
+
+            AnimatedVisibility(
+                visible = state.isSearchSectionVisible,
+                enter = fadeIn() + slideInVertically(),
+                exit = fadeOut() + slideOutVertically()
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp)
+                ) {
+                    OutlinedTextField(
+                        modifier = Modifier
+                            .background(colorResource(id = R.color.custom_toolbar_color))
+                            .fillMaxWidth()
+                            .padding(10.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        label = {
+                            Text(text = stringResource(id = R.string.search))
+                        },
+                        value = searchQuery,
+                        onValueChange = {
+                            searchQuery = it
+                            viewModel.searchNote(searchQuery)
+                        }
                     )
                 }
             }

@@ -22,6 +22,7 @@
     <string name="notebook_logo">My notebook logo</string>
     <string name="search">Search</string>
     <string name="search_in_notes">Search in notes…</string>
+    <string name="search_button">Search button</string>
     <string name="new_note">New Note</string>
     <string name="save">Save</string>
     <string name="update">Update</string>
