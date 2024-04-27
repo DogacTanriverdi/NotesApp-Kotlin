@@ -11,10 +11,10 @@ android {
 
     defaultConfig {
         applicationId "com.dogactnrvrdi.notesapp"
-        minSdk 23
+        minSdk 21
         targetSdk 34
-        versionCode 8
-        versionName "1.2.0"
+        versionCode 9
+        versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -75,7 +75,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.viewmodel.compose)
 
-    // Navigaton Compose
+    // Navigation Compose
     implementation(libs.navigation.compose)
 
     // Coroutines
