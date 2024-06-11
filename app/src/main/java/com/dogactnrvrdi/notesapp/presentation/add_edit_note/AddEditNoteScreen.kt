@@ -23,6 +23,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.FloatingActionButton
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Scaffold
+import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -49,7 +50,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.presentation.add_edit_note.components.ColorSection
-import com.dogactnrvrdi.notesapp.presentation.add_edit_note.components.TransparentHintTextField
+import com.dogactnrvrdi.notesapp.presentation.add_edit_note.components.DescriptionTextField
+import com.dogactnrvrdi.notesapp.presentation.add_edit_note.components.TitleTextField
 import kotlinx.coroutines.flow.collectLatest
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -184,7 +186,7 @@ fun AddEditNoteScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            TransparentHintTextField(
+            TitleTextField(
                 modifier = Modifier,
                 text = titleState.text,
                 hint = stringResource(id = titleState.hint),
@@ -202,9 +204,13 @@ fun AddEditNoteScreen(
                 )
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Divider(
+                color = Color.Gray,
+                thickness = 1.dp,
+                modifier = Modifier.padding(vertical = 16.dp)
+            )
 
-            TransparentHintTextField(
+            DescriptionTextField(
                 text = contentState.text,
                 hint = stringResource(id = contentState.hint),
                 onValueChange = {
