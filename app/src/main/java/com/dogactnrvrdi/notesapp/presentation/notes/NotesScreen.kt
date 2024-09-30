@@ -9,6 +9,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.FloatingActionButton
@@ -204,17 +208,18 @@ fun NotesScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(state.notes.windowed(2, 2, true)) { notes ->
+            LazyVerticalStaggeredGrid(
+                columns = StaggeredGridCells.Fixed(2),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(state.notes) { note ->
 
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(start = 10.dp, end = 10.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                            .padding(start = 10.dp, end = 10.dp, bottom = 20.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                        notes.forEach { note ->
-
                             NoteItem(
                                 note = note,
                                 modifier = Modifier
@@ -239,7 +244,6 @@ fun NotesScreen(
                                     }
                                 }
                             )
-                        }
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))

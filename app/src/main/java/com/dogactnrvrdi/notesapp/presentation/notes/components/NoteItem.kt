@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dogactnrvrdi.notesapp.R
@@ -36,7 +37,7 @@ fun NoteItem(
 
         Column(
             modifier = Modifier
-                .width(180.dp)
+                .width(200.dp)
                 .padding(10.dp)
                 .padding(end = 32.dp, start = 5.dp)
         ) {
@@ -45,7 +46,7 @@ fun NoteItem(
                 text = note.title,
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.surface,
-                maxLines = 1,
+                maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
 
@@ -54,8 +55,8 @@ fun NoteItem(
             Text(
                 text = note.description,
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.surface,
-                maxLines = 1,
+                color = Color.Gray,
+                maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
 
