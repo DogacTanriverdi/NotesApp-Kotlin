@@ -24,11 +24,11 @@ class AddEditNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _noteTitle = mutableStateOf(NoteTextFieldState(hint = R.string.title))
-    val noteTitle: State<NoteTextFieldState> get() = _noteTitle
+    private val _noteTitle = mutableStateOf("")
+    val noteTitle: State<String> get() = _noteTitle
 
-    private val _noteContent = mutableStateOf(NoteTextFieldState(hint = R.string.type_something))
-    val noteContent: State<NoteTextFieldState> get() = _noteContent
+    private val _noteContent = mutableStateOf("")
+    val noteContent: State<String> get() = _noteContent
 
     private val _noteColor = mutableIntStateOf(Note.noteColors.random().toArgb())
     val noteColor: State<Int> get() = _noteColor
@@ -46,19 +46,12 @@ class AddEditNoteViewModel @Inject constructor(
             if (noteId != -1) {
                 viewModelScope.launch {
                     noteUseCases.getNote(noteId)?.also { note ->
-                        currentNoteId = note.id
-
-                        _noteTitle.value = noteTitle.value.copy(
-                            text = note.title,
-                            isHintVisible = false
-                        )
-
-                        _noteContent.value = noteContent.value.copy(
-                            text = note.description,
-                            isHintVisible = false
-                        )
-
-                        _noteColor.intValue = note.color
+                        with(note) {
+                            currentNoteId = id
+                            _noteTitle.value = title
+                            _noteContent.value = description
+                            _noteColor.intValue = color
+                        }
                     }
                 }
             }
@@ -70,8 +63,8 @@ class AddEditNoteViewModel @Inject constructor(
             try {
                 noteUseCases.addNote(
                     Note(
-                        title = noteTitle.value.text,
-                        description = noteContent.value.text,
+                        title = noteTitle.value,
+                        description = noteContent.value,
                         created = System.currentTimeMillis(),
                         color = noteColor.value,
                         id = currentNoteId
@@ -89,23 +82,11 @@ class AddEditNoteViewModel @Inject constructor(
     }
 
     fun enteredTitle(value: String) {
-        _noteTitle.value = noteTitle.value.copy(text = value)
-    }
-
-    fun changeTitleFocus(focusState: FocusState) {
-        _noteTitle.value = noteTitle.value.copy(
-            isHintVisible = !focusState.isFocused && noteTitle.value.text.isBlank()
-        )
+        _noteTitle.value = value
     }
 
     fun enteredContent(value: String) {
-        _noteContent.value = _noteContent.value.copy(text = value)
-    }
-
-    fun changeContentFocus(focusState: FocusState) {
-        _noteContent.value = _noteContent.value.copy(
-            isHintVisible = !focusState.isFocused && _noteContent.value.text.isBlank()
-        )
+        _noteContent.value = value
     }
 
     fun changeColor(color: Int) {

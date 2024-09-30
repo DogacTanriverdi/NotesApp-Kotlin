@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusState
@@ -20,23 +22,21 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun DescriptionTextField(
     text: String,
-    hint: String,
     modifier: Modifier = Modifier,
-    isHintVisible: Boolean = true,
     onValueChange: (String) -> Unit,
-    textStyle: TextStyle = TextStyle(),
-    singleLine: Boolean = false,
-    onFocusChange: (FocusState) -> Unit
 ) {
     Box(modifier = modifier) {
 
-        BasicTextField(
+        OutlinedTextField(
             value = text,
             onValueChange = { newValue ->
                 onValueChange(capitalizeFirstLetter(newValue))
             },
-            singleLine = singleLine,
-            textStyle = textStyle,
+            textStyle = TextStyle(
+                color = MaterialTheme.colorScheme.surface,
+                fontSize = MaterialTheme.typography.titleLarge.fontSize
+            ),
+            label = { Text(text = "Description") },
             keyboardOptions = KeyboardOptions.Default.copy(
                 capitalization = KeyboardCapitalization.Sentences
             ),
@@ -44,18 +44,7 @@ fun DescriptionTextField(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(start = 10.dp)
-                .onFocusChanged {
-                    onFocusChange(it)
-                },
         )
-
-        if (isHintVisible)
-            Text(
-                modifier = Modifier.padding(start = 10.dp),
-                text = hint,
-                style = textStyle,
-                color = MaterialTheme.colorScheme.onError
-            )
     }
 }
 

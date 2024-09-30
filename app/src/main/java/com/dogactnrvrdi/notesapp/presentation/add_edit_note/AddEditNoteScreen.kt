@@ -188,42 +188,19 @@ fun AddEditNoteScreen(
 
             TitleTextField(
                 modifier = Modifier,
-                text = titleState.text,
-                hint = stringResource(id = titleState.hint),
+                text = titleState,
                 onValueChange = {
                     viewModel.enteredTitle(it)
-                },
-                onFocusChange = {
-                    viewModel.changeTitleFocus(it)
-                },
-                isHintVisible = titleState.isHintVisible,
-                singleLine = true,
-                textStyle = TextStyle(
-                    color = MaterialTheme.colorScheme.surface,
-                    fontSize = MaterialTheme.typography.headlineMedium.fontSize
-                )
+                }
             )
 
-            Divider(
-                color = Color.Gray,
-                thickness = 1.dp,
-                modifier = Modifier.padding(vertical = 16.dp)
-            )
+            Spacer(modifier = Modifier.height(16.dp))
 
             DescriptionTextField(
-                text = contentState.text,
-                hint = stringResource(id = contentState.hint),
+                text = contentState,
                 onValueChange = {
                     viewModel.enteredContent(it)
                 },
-                onFocusChange = {
-                    viewModel.changeContentFocus(it)
-                },
-                isHintVisible = contentState.isHintVisible,
-                textStyle = TextStyle(
-                    color = MaterialTheme.colorScheme.surface,
-                    fontSize = MaterialTheme.typography.titleLarge.fontSize
-                ),
                 modifier = Modifier.fillMaxHeight(),
             )
         }
