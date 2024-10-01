@@ -8,6 +8,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun DefaultRadioButton(
@@ -25,15 +26,15 @@ fun DefaultRadioButton(
             selected = selected,
             onClick = onSelect,
             colors = RadioButtonDefaults.colors(
-                selectedColor = MaterialTheme.colorScheme.surface,
-                unselectedColor = MaterialTheme.colorScheme.onError
+                selectedColor = MaterialTheme.colorScheme.primary,
+                unselectedColor = Color.Gray
             )
         )
 
         Text(
             text = text,
             style = MaterialTheme.typography.bodyLarge,
-            color = MaterialTheme.colorScheme.surface
+            color = MaterialTheme.colorScheme.onBackground
         )
     }
 }

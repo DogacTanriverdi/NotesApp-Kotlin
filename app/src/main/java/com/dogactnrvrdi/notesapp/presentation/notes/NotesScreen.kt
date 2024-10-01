@@ -85,9 +85,8 @@ fun NotesScreen(
                 onClick = {
                     navController.navigate(Screen.AddEditNoteScreen.route)
                 },
-                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+                backgroundColor = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(10.dp),
-                contentColor = MaterialTheme.colorScheme.surface
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
@@ -115,7 +114,7 @@ fun NotesScreen(
 
                 Text(
                     text = stringResource(id = R.string.notes),
-                    color = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.onBackground,
                     style = MaterialTheme.typography.headlineMedium,
                     modifier = Modifier.padding(start = 15.dp)
                 )
@@ -136,7 +135,7 @@ fun NotesScreen(
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = stringResource(id = R.string.search_button),
-                            tint = MaterialTheme.colorScheme.surface
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
 
@@ -148,7 +147,7 @@ fun NotesScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Default.Sort,
                             contentDescription = stringResource(id = R.string.sort_button),
-                            tint = MaterialTheme.colorScheme.surface
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
                 }
@@ -166,7 +165,7 @@ fun NotesScreen(
                 ) {
                     OutlinedTextField(
                         modifier = Modifier
-                            .background(colorResource(id = R.color.custom_toolbar_color))
+                            .background(MaterialTheme.colorScheme.surface)
                             .fillMaxWidth()
                             .padding(10.dp)
                             .focusRequester(focusRequester),

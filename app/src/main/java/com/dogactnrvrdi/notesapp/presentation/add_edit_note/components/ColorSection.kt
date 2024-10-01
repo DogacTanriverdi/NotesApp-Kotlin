@@ -54,7 +54,7 @@ fun ColorSection(
                     .border(
                         width = 3.dp,
                         color = if (viewModel.noteColor.value == colorInt)
-                            MaterialTheme.colorScheme.surface
+                            MaterialTheme.colorScheme.onBackground
                         else
                             Color.Transparent,
                         shape = RoundedCornerShape(10.dp)

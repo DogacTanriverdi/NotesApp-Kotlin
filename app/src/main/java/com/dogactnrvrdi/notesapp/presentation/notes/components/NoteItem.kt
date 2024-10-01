@@ -45,7 +45,7 @@ fun NoteItem(
             Text(
                 text = note.title,
                 style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.onBackground,
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis
             )
@@ -78,7 +78,7 @@ fun NoteItem(
             Icon(
                 imageVector = Icons.Default.Delete,
                 contentDescription = stringResource(id = R.string.delete_note),
-                tint = MaterialTheme.colorScheme.surface
+                tint = MaterialTheme.colorScheme.onBackground
             )
         }
     }

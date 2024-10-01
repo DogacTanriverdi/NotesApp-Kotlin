@@ -39,7 +39,7 @@ fun TitleTextField(
             label = { Text(text = stringResource(R.string.title)) },
             maxLines = 3,
             textStyle = TextStyle(
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = MaterialTheme.typography.headlineMedium.fontSize
             ),
             keyboardOptions = KeyboardOptions.Default.copy(

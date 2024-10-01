@@ -101,9 +101,8 @@ fun AddEditNoteScreen(
                 onClick = {
                     viewModel.saveNote()
                 },
-                backgroundColor = MaterialTheme.colorScheme.primaryContainer,
+                backgroundColor = MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(10.dp),
-                contentColor = MaterialTheme.colorScheme.surface
             ) {
                 Icon(
                     imageVector = Icons.Default.Save,
@@ -121,7 +120,7 @@ fun AddEditNoteScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.secondary)
+                    .background(MaterialTheme.colorScheme.surface)
                     .height(70.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -138,13 +137,13 @@ fun AddEditNoteScreen(
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(R.string.back_button),
-                            tint = MaterialTheme.colorScheme.surface
+                            tint = MaterialTheme.colorScheme.onBackground
                         )
                     }
 
                     Text(
                         text = stringResource(id = R.string.edit_note),
-                        color = MaterialTheme.colorScheme.surface,
+                        color = MaterialTheme.colorScheme.onBackground,
                         style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.padding(start = 15.dp)
                     )
@@ -156,7 +155,7 @@ fun AddEditNoteScreen(
                     Icon(
                         imageVector = Icons.Default.ColorLens,
                         contentDescription = stringResource(R.string.select_color_button),
-                        tint = MaterialTheme.colorScheme.surface
+                        tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
             }
