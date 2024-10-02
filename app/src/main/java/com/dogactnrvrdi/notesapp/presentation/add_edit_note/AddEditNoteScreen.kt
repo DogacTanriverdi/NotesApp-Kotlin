@@ -19,18 +19,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.FloatingActionButton
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Scaffold
-import androidx.compose.material.TabRowDefaults.Divider
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Save
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -44,7 +41,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -66,7 +62,7 @@ fun AddEditNoteScreen(
     val contentState = viewModel.noteContent.value
     val colorState = viewModel.colorState.value
 
-    val scaffoldState = rememberScaffoldState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val context = LocalContext.current
 
@@ -83,7 +79,7 @@ fun AddEditNoteScreen(
             when (event) {
 
                 is AddEditNoteViewModel.UIEvent.ShowSnackbar -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
+                    snackbarHostState.showSnackbar(
                         message = context.getString(event.message.toInt())
                     )
                 }
@@ -96,12 +92,14 @@ fun AddEditNoteScreen(
     }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     viewModel.saveNote()
                 },
-                backgroundColor = MaterialTheme.colorScheme.surface,
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onBackground,
                 shape = RoundedCornerShape(10.dp),
             ) {
                 Icon(
@@ -109,12 +107,13 @@ fun AddEditNoteScreen(
                     contentDescription = stringResource(R.string.save_note_button)
                 )
             }
-        }, scaffoldState = scaffoldState
-    ) {
+        }
+    ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(paddingValues)
         ) {
 
             Row(

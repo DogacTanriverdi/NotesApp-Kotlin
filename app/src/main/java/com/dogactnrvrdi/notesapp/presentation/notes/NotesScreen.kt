@@ -9,7 +9,6 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,24 +16,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.FloatingActionButton
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Scaffold
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.SnackbarResult
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -71,21 +65,24 @@ fun NotesScreen(
 ) {
 
     val state = viewModel.state.value
-    val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
+
+    val snackbarHostState = remember { SnackbarHostState() }
 
     val context = LocalContext.current
 
     var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState =  snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     navController.navigate(Screen.AddEditNoteScreen.route)
                 },
-                backgroundColor = MaterialTheme.colorScheme.surface,
+                containerColor = MaterialTheme.colorScheme.surface,
+                contentColor = MaterialTheme.colorScheme.onBackground,
                 shape = RoundedCornerShape(10.dp),
             ) {
                 Icon(
@@ -94,13 +91,13 @@ fun NotesScreen(
                 )
             }
         },
-        scaffoldState = scaffoldState,
         modifier = Modifier
-    ) {
+    ) { paddingValues ->
         Column(
             modifier = Modifier
-                .background(MaterialTheme.colorScheme.background)
                 .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .padding(paddingValues)
         ) {
 
             Row(
@@ -232,7 +229,7 @@ fun NotesScreen(
                                     viewModel.deleteNote(note)
                                     scope.launch {
 
-                                        val result = scaffoldState.snackbarHostState.showSnackbar(
+                                        val result = snackbarHostState.showSnackbar(
                                             message = context.getString(R.string.note_deleted_successfully),
                                             actionLabel = context.getString(R.string.undo)
                                         )
