@@ -4,6 +4,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -37,7 +38,7 @@ fun NoteItem(
 
         Column(
             modifier = Modifier
-                .width(200.dp)
+                .fillMaxWidth()
                 .padding(10.dp)
                 .padding(end = 32.dp, start = 5.dp)
         ) {
