@@ -92,12 +92,12 @@ fun NotesScreen(
             }
         },
         modifier = Modifier
-    ) { paddingValues ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(paddingValues)
+                .padding(innerPadding)
         ) {
 
             Row(
