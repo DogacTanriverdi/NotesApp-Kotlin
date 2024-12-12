@@ -25,46 +25,41 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        enableEdgeToEdge()
         setContent {
             NotesAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Column(
-                        modifier = Modifier.padding(innerPadding)
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = Screen.NotesScreen.route
+                ) {
+
+                    composable(Screen.NotesScreen.route) {
+                        NotesScreen(navController = navController)
+                    }
+
+                    composable(
+                        route = Screen.AddEditNoteScreen.route +
+                                "?noteId={noteId}&noteColor={noteColor}",
+                        arguments = listOf(
+
+                            navArgument(name = "noteId") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            },
+
+                            navArgument(name = "noteColor") {
+                                type = NavType.IntType
+                                defaultValue = -1
+                            }
+                        )
                     ) {
-                        val navController = rememberNavController()
-
-                        NavHost(
+                        val color = it.arguments?.getInt("noteColor") ?: -1
+                        AddEditNoteScreen(
                             navController = navController,
-                            startDestination = Screen.NotesScreen.route
-                        ) {
-
-                            composable(Screen.NotesScreen.route) {
-                                NotesScreen(navController = navController)
-                            }
-
-                            composable(
-                                route = Screen.AddEditNoteScreen.route +
-                                        "?noteId={noteId}&noteColor={noteColor}",
-                                arguments = listOf(
-
-                                    navArgument(name = "noteId") {
-                                        type = NavType.IntType
-                                        defaultValue = -1
-                                    },
-
-                                    navArgument(name = "noteColor") {
-                                        type = NavType.IntType
-                                        defaultValue = -1
-                                    }
-                                )
-                            ) {
-                                val color = it.arguments?.getInt("noteColor") ?: -1
-                                AddEditNoteScreen(
-                                    navController = navController,
-                                    noteColor = color
-                                )
-                            }
-                        }
+                            noteColor = color
+                        )
                     }
                 }
             }
