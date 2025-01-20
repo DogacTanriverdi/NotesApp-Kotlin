@@ -1,6 +1,5 @@
 package com.dogactnrvrdi.notesapp.di
 
-import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
 import com.dogactnrvrdi.notesapp.domain.use_case.AddNoteUseCase
 import com.dogactnrvrdi.notesapp.domain.use_case.DeleteNoteUseCase
 import com.dogactnrvrdi.notesapp.domain.use_case.GetNoteUseCase
@@ -15,18 +14,22 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+object UseCaseModule {
 
-    @Singleton
-    @Provides
+    @[Provides Singleton]
     fun provideNoteUseCases(
-        repo: NoteRepository
-    ): NoteUseCases =
-        NoteUseCases(
-            getNotes = GetNotesUseCase(repo),
-            deleteNote = DeleteNoteUseCase(repo),
-            addNote = AddNoteUseCase(repo),
-            getNote = GetNoteUseCase(repo),
-            searchNote = SearchNoteUseCase(repo)
+        getNotesUseCase: GetNotesUseCase,
+        deleteNoteUseCase: DeleteNoteUseCase,
+        addNoteUseCases: AddNoteUseCase,
+        getNoteUseCase: GetNoteUseCase,
+        searchNoteUseCase: SearchNoteUseCase
+    ): NoteUseCases {
+        return NoteUseCases(
+            getNotes = getNotesUseCase,
+            deleteNote = deleteNoteUseCase,
+            addNote = addNoteUseCases,
+            getNote = getNoteUseCase,
+            searchNote = searchNoteUseCase
         )
+    }
 }
