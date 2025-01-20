@@ -32,6 +32,7 @@ fun NotesAppTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
+        typography = Typography,
         content = content
     )
 }
