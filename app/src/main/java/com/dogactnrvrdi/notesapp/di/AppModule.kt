@@ -1,7 +1,5 @@
 package com.dogactnrvrdi.notesapp.di
 
-import com.dogactnrvrdi.notesapp.data.repo.NoteRepositoryImpl
-import com.dogactnrvrdi.notesapp.data.source.local.NoteDao
 import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
 import com.dogactnrvrdi.notesapp.domain.use_case.AddNoteUseCase
 import com.dogactnrvrdi.notesapp.domain.use_case.DeleteNoteUseCase
@@ -18,11 +16,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
-
-    @Singleton
-    @Provides
-    fun provideNoteRepository(dao: NoteDao): NoteRepository =
-        NoteRepositoryImpl(dao)
 
     @Singleton
     @Provides
