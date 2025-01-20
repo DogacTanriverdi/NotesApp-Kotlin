@@ -1,6 +1,5 @@
 package com.dogactnrvrdi.notesapp.presentation.notes
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -20,19 +19,19 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,46 +39,82 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dogactnrvrdi.notesapp.R
-import com.dogactnrvrdi.notesapp.presentation.Screen
+import com.dogactnrvrdi.notesapp.presentation.navigation.Screen
+import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiAction
+import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiEffect
+import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiState
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NoteItem
 import com.dogactnrvrdi.notesapp.presentation.notes.components.OrderSection
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun NotesScreen(
     navController: NavController,
-    viewModel: NotesViewModel = hiltViewModel()
+    uiState: UiState,
+    uiEffect: Flow<UiEffect>,
+    onAction: (UiAction) -> Unit
 ) {
+    val context = LocalContext.current
 
-    val state = viewModel.state.value
-    val scope = rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
     val focusRequester = remember { FocusRequester() }
 
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val context = LocalContext.current
-
     var searchQuery by remember { mutableStateOf("") }
 
+    var isSearchSectionVisible by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        onAction(UiAction.GetNotes(noteOrder = uiState.noteOrder))
+    }
+
+    LaunchedEffect(uiEffect) {
+        uiEffect.collect { effect ->
+            when (effect) {
+
+                is UiEffect.ShowSnackbar -> {
+                    coroutineScope.launch {
+                        val result = snackbarHostState.showSnackbar(
+                            message = effect.message,
+                            actionLabel = effect.actionLabel
+                        )
+                        if (result == SnackbarResult.ActionPerformed) {
+                            onAction(UiAction.RestoreNote)
+                        }
+                    }
+                }
+
+                is UiEffect.NavigateToAddEditNoteScreen -> {
+                    navController.navigate(
+                        route = Screen.AddEditNoteScreen(
+                            noteId = effect.noteId,
+                            noteColor = effect.noteColor
+                        )
+                    )
+                }
+            }
+        }
+    }
+
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState =  snackbarHostState) },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(Screen.AddEditNoteScreen.route)
+                    onAction(UiAction.FabClick())
                 },
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onBackground,
@@ -103,7 +138,7 @@ fun NotesScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(colorResource(id = R.color.custom_toolbar_color))
+                    .background(MaterialTheme.colorScheme.surface)
                     .height(70.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
@@ -119,7 +154,7 @@ fun NotesScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(colorResource(id = R.color.custom_toolbar_color))
+                        .background(MaterialTheme.colorScheme.surface)
                         .height(70.dp),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically
@@ -127,7 +162,7 @@ fun NotesScreen(
 
                     IconButton(
                         onClick = {
-                            viewModel.searchSection()
+                            isSearchSectionVisible = !isSearchSectionVisible
                         }) {
                         Icon(
                             imageVector = Icons.Default.Search,
@@ -138,7 +173,7 @@ fun NotesScreen(
 
                     IconButton(
                         onClick = {
-                            viewModel.toggleOrderSection()
+                            onAction(UiAction.ToggleOrderSection)
                         },
                     ) {
                         Icon(
@@ -151,7 +186,7 @@ fun NotesScreen(
             }
 
             AnimatedVisibility(
-                visible = state.isSearchSectionVisible,
+                visible = isSearchSectionVisible,
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
@@ -173,31 +208,31 @@ fun NotesScreen(
                         value = searchQuery,
                         onValueChange = {
                             searchQuery = it
-                            viewModel.searchNote(searchQuery)
+                            onAction(UiAction.SearchNote(query = searchQuery))
                         }
                     )
                 }
             }
 
-            LaunchedEffect(state.isSearchSectionVisible) {
-                if (state.isSearchSectionVisible) {
+            LaunchedEffect(isSearchSectionVisible) {
+                if (isSearchSectionVisible) {
                     focusRequester.requestFocus()
                 }
             }
 
             AnimatedVisibility(
-                visible = state.isOrderSectionVisible,
+                visible = uiState.isOrderSectionVisible,
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
                 OrderSection(
                     modifier = Modifier
-                        .background(colorResource(id = R.color.custom_toolbar_color))
+                        .background(MaterialTheme.colorScheme.surface)
                         .fillMaxWidth()
                         .padding(vertical = 16.dp),
-                    noteOrder = state.noteOrder,
+                    noteOrder = uiState.noteOrder,
                     onOrderChange = { noteOrder ->
-                        viewModel.order(noteOrder)
+                        onAction(UiAction.Order(noteOrder = noteOrder))
                     }
                 )
             }
@@ -208,7 +243,7 @@ fun NotesScreen(
                 columns = StaggeredGridCells.Fixed(2),
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(state.notes) { note ->
+                items(uiState.notes) { note ->
 
                     Row(
                         modifier = Modifier
@@ -216,30 +251,27 @@ fun NotesScreen(
                             .padding(start = 10.dp, end = 10.dp, bottom = 20.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                            NoteItem(
-                                note = note,
-                                modifier = Modifier
-                                    .clickable {
-                                        navController.navigate(
-                                            route = Screen.AddEditNoteScreen.route +
-                                                    "?noteId=${note.id}&noteColor=${note.color}"
+                        NoteItem(
+                            note = note,
+                            modifier = Modifier
+                                .clickable {
+                                    onAction(
+                                        UiAction.FabClick(
+                                            noteId = note.id ?: -1,
+                                            noteColor = note.color
                                         )
-                                    },
-                                onDeleteClick = {
-                                    viewModel.deleteNote(note)
-                                    scope.launch {
-
-                                        val result = snackbarHostState.showSnackbar(
-                                            message = context.getString(R.string.note_deleted_successfully),
-                                            actionLabel = context.getString(R.string.undo)
-                                        )
-
-                                        if (result == SnackbarResult.ActionPerformed) {
-                                            viewModel.restoreNote()
-                                        }
-                                    }
-                                }
-                            )
+                                    )
+                                },
+                            onDeleteClick = {
+                                onAction(UiAction.DeleteNote(note = note))
+                                onAction(
+                                    UiAction.ShowSnackbar(
+                                        message = context.getString(R.string.note_deleted_successfully),
+                                        actionLabel = context.getString(R.string.undo)
+                                    )
+                                )
+                            }
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))

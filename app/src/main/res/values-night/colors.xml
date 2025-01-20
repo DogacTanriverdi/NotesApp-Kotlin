@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFFFF</color>
-    <color name="black">#FF000000</color>
-    <color name="custom_background">#FF161616</color>
-    <color name="custom_purple">#CE8ADF</color>
-    <color name="custom_text_color">#FFFFFF</color>
-    <color name="text_cursor_color">#FFFFFF</color>
-    <color name="custom_toolbar_color">#322736</color>
-    <color name="custom_statusbar_color">#1F1922</color>
-    <color name="custom_toolbar_text_color">#FFFFFF</color>
-    <color name="custom_fab_color">#524059</color>
-    <color name="custom_stroke_color">#D2B6FF</color>
+    <color name="surface">#FF322736</color>
 </resources>

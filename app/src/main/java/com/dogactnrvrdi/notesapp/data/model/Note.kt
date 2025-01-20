@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.domain.model
+package com.dogactnrvrdi.notesapp.data.model
 
 import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
