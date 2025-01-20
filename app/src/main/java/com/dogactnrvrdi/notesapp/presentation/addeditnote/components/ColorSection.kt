@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.presentation.add_edit_note.components
+package com.dogactnrvrdi.notesapp.presentation.addeditnote.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector4D
@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import com.dogactnrvrdi.notesapp.data.model.Note
-import com.dogactnrvrdi.notesapp.presentation.add_edit_note.AddEditNoteViewModel
+import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

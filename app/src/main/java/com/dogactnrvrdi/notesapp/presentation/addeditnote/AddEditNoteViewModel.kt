@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.presentation.add_edit_note
+package com.dogactnrvrdi.notesapp.presentation.addeditnote
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf

@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.presentation.add_edit_note
+package com.dogactnrvrdi.notesapp.presentation.addeditnote
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.Animatable
@@ -44,9 +44,9 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dogactnrvrdi.notesapp.R
-import com.dogactnrvrdi.notesapp.presentation.add_edit_note.components.ColorSection
-import com.dogactnrvrdi.notesapp.presentation.add_edit_note.components.DescriptionTextField
-import com.dogactnrvrdi.notesapp.presentation.add_edit_note.components.TitleTextField
+import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.ColorSection
+import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.DescriptionTextField
+import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.TitleTextField
 import kotlinx.coroutines.flow.collectLatest
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
