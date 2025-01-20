@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.domain.use_case
+package com.dogactnrvrdi.notesapp.domain.usecase
 
 import com.dogactnrvrdi.notesapp.common.NoteOrder
 import com.dogactnrvrdi.notesapp.common.OrderType

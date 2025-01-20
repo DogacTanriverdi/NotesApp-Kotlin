@@ -1,11 +1,11 @@
 package com.dogactnrvrdi.notesapp.di
 
-import com.dogactnrvrdi.notesapp.domain.use_case.AddNoteUseCase
-import com.dogactnrvrdi.notesapp.domain.use_case.DeleteNoteUseCase
-import com.dogactnrvrdi.notesapp.domain.use_case.GetNoteUseCase
-import com.dogactnrvrdi.notesapp.domain.use_case.GetNotesUseCase
-import com.dogactnrvrdi.notesapp.domain.use_case.NoteUseCases
-import com.dogactnrvrdi.notesapp.domain.use_case.SearchNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.usecase.AddNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.usecase.DeleteNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.usecase.GetNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.usecase.GetNotesUseCase
+import com.dogactnrvrdi.notesapp.domain.usecase.NoteUseCases
+import com.dogactnrvrdi.notesapp.domain.usecase.SearchNoteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

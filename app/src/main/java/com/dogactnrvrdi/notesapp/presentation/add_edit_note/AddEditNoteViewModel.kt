@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dogactnrvrdi.notesapp.data.model.InvalidNoteException
 import com.dogactnrvrdi.notesapp.data.model.Note
-import com.dogactnrvrdi.notesapp.domain.use_case.NoteUseCases
+import com.dogactnrvrdi.notesapp.domain.usecase.NoteUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
