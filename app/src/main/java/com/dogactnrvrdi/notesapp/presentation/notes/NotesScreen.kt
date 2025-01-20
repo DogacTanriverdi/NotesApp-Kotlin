@@ -20,19 +20,19 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -51,7 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dogactnrvrdi.notesapp.R
-import com.dogactnrvrdi.notesapp.presentation.Screen
+import com.dogactnrvrdi.notesapp.presentation.navigation.Screen
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NoteItem
 import com.dogactnrvrdi.notesapp.presentation.notes.components.OrderSection
 import kotlinx.coroutines.launch
@@ -74,11 +74,13 @@ fun NotesScreen(
     var searchQuery by remember { mutableStateOf("") }
 
     Scaffold(
-        snackbarHost = { SnackbarHost(hostState =  snackbarHostState) },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    navController.navigate(Screen.AddEditNoteScreen.route)
+                    navController.navigate(
+                        Screen.AddEditNoteScreen()
+                    )
                 },
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onBackground,
@@ -215,30 +217,32 @@ fun NotesScreen(
                             .padding(start = 10.dp, end = 10.dp, bottom = 20.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ) {
-                            NoteItem(
-                                note = note,
-                                modifier = Modifier
-                                    .clickable {
-                                        navController.navigate(
-                                            route = Screen.AddEditNoteScreen.route +
-                                                    "?noteId=${note.id}&noteColor=${note.color}"
+                        NoteItem(
+                            note = note,
+                            modifier = Modifier
+                                .clickable {
+                                    navController.navigate(
+                                        route = Screen.AddEditNoteScreen(
+                                            noteId = note.id ?: -1,
+                                            noteColor = note.color
                                         )
-                                    },
-                                onDeleteClick = {
-                                    viewModel.deleteNote(note)
-                                    scope.launch {
+                                    )
+                                },
+                            onDeleteClick = {
+                                viewModel.deleteNote(note)
+                                scope.launch {
 
-                                        val result = snackbarHostState.showSnackbar(
-                                            message = context.getString(R.string.note_deleted_successfully),
-                                            actionLabel = context.getString(R.string.undo)
-                                        )
+                                    val result = snackbarHostState.showSnackbar(
+                                        message = context.getString(R.string.note_deleted_successfully),
+                                        actionLabel = context.getString(R.string.undo)
+                                    )
 
-                                        if (result == SnackbarResult.ActionPerformed) {
-                                            viewModel.restoreNote()
-                                        }
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        viewModel.restoreNote()
                                     }
                                 }
-                            )
+                            }
+                        )
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))
