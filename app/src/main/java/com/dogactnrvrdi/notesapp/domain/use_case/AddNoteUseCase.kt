@@ -4,7 +4,6 @@ import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.data.model.InvalidNoteException
 import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
-import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlin.jvm.Throws
 

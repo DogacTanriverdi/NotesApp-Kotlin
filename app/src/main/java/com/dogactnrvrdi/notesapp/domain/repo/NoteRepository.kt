@@ -1,6 +1,5 @@
 package com.dogactnrvrdi.notesapp.domain.repo
 
-import androidx.lifecycle.LiveData
 import com.dogactnrvrdi.notesapp.data.model.Note
 import kotlinx.coroutines.flow.Flow
 

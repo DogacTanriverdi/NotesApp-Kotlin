@@ -3,12 +3,10 @@ package com.dogactnrvrdi.notesapp.presentation.add_edit_note
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dogactnrvrdi.notesapp.R
 import com.dogactnrvrdi.notesapp.data.model.InvalidNoteException
 import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.domain.use_case.NoteUseCases
