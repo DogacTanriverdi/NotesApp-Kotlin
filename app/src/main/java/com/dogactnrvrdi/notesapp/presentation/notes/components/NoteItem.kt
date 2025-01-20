@@ -22,7 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.dogactnrvrdi.notesapp.R
-import com.dogactnrvrdi.notesapp.domain.model.Note
+import com.dogactnrvrdi.notesapp.data.model.Note
 
 @Composable
 fun NoteItem(

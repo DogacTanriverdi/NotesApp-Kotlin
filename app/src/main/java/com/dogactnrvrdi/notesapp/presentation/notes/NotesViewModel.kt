@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dogactnrvrdi.notesapp.common.NoteOrder
 import com.dogactnrvrdi.notesapp.common.OrderType
-import com.dogactnrvrdi.notesapp.domain.model.Note
+import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.domain.use_case.NoteUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job

@@ -22,7 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import com.dogactnrvrdi.notesapp.domain.model.Note
+import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.presentation.add_edit_note.AddEditNoteViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

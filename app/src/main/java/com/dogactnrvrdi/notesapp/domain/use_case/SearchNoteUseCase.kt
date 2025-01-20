@@ -2,7 +2,7 @@ package com.dogactnrvrdi.notesapp.domain.use_case
 
 import com.dogactnrvrdi.notesapp.common.NoteOrder
 import com.dogactnrvrdi.notesapp.common.OrderType
-import com.dogactnrvrdi.notesapp.domain.model.Note
+import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
