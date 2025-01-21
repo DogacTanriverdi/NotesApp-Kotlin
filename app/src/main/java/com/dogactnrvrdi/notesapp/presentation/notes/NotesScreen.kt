@@ -41,9 +41,13 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dogactnrvrdi.notesapp.R
+import com.dogactnrvrdi.notesapp.common.NoteOrder
+import com.dogactnrvrdi.notesapp.common.OrderType
+import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.presentation.components.CustomFab
 import com.dogactnrvrdi.notesapp.presentation.navigation.Screen
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiAction
@@ -62,17 +66,9 @@ fun NotesScreen(
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit
 ) {
-    val context = LocalContext.current
-
     val coroutineScope = rememberCoroutineScope()
-    val focusRequester = remember { FocusRequester() }
 
     val snackbarHostState = remember { SnackbarHostState() }
-
-    var searchQuery by remember { mutableStateOf("") }
-
-    var isSearchSectionVisible by rememberSaveable { mutableStateOf(false) }
-    var isOrderSectionVisible by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         onAction(UiAction.GetNotes(noteOrder = uiState.noteOrder))
@@ -105,6 +101,30 @@ fun NotesScreen(
             }
         }
     }
+
+    NotesContent(
+        snackbarHostState = snackbarHostState,
+        notes = uiState.notes,
+        noteOrder = uiState.noteOrder,
+        onAction = onAction,
+    )
+}
+
+@Composable
+fun NotesContent(
+    snackbarHostState: SnackbarHostState,
+    notes: List<Note>,
+    noteOrder: NoteOrder,
+    onAction: (UiAction) -> Unit
+) {
+    val context = LocalContext.current
+
+    var searchQuery by remember { mutableStateOf("") }
+
+    var isSearchSectionVisible by rememberSaveable { mutableStateOf(false) }
+    var isOrderSectionVisible by rememberSaveable { mutableStateOf(false) }
+
+    val focusRequester = remember { FocusRequester() }
 
     LaunchedEffect(isSearchSectionVisible) {
         if (isSearchSectionVisible) {
@@ -175,7 +195,7 @@ fun NotesScreen(
                         .background(MaterialTheme.colorScheme.surface)
                         .fillMaxWidth()
                         .padding(vertical = 16.dp),
-                    noteOrder = uiState.noteOrder,
+                    noteOrder = noteOrder,
                     onOrderChange = { noteOrder ->
                         onAction(UiAction.Order(noteOrder = noteOrder))
                     }
@@ -188,7 +208,7 @@ fun NotesScreen(
                 columns = StaggeredGridCells.Adaptive(160.dp),
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(uiState.notes) { note ->
+                items(notes) { note ->
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -220,4 +240,15 @@ fun NotesScreen(
             }
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun NotesContentPreview() {
+    NotesContent(
+        snackbarHostState = SnackbarHostState(),
+        notes = emptyList(),
+        noteOrder = NoteOrder.Date(OrderType.Descending),
+        onAction = {}
+    )
 }
