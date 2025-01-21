@@ -40,7 +40,7 @@ fun DescriptionTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(start = 10.dp)
+                .padding(horizontal = 10.dp)
         )
     }
 }
