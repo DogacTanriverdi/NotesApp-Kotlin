@@ -42,8 +42,6 @@ class NotesViewModel @Inject constructor(
 
             is UiAction.Order -> order(uiAction.noteOrder)
 
-            is UiAction.ToggleOrderSection -> toggleOrderSection()
-
             is UiAction.FabClick -> {
                 viewModelScope.launch {
                     emitUiEffect(
@@ -90,10 +88,6 @@ class NotesViewModel @Inject constructor(
                 updateUiState { copy(notes = notes, noteOrder = noteOrder) }
             }
         }
-    }
-
-    private fun toggleOrderSection() {
-        updateUiState { copy(isOrderSectionVisible = !isOrderSectionVisible) }
     }
 
     private fun restoreNote() {

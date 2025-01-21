@@ -72,6 +72,7 @@ fun NotesScreen(
     var searchQuery by remember { mutableStateOf("") }
 
     var isSearchSectionVisible by rememberSaveable { mutableStateOf(false) }
+    var isOrderSectionVisible by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         onAction(UiAction.GetNotes(noteOrder = uiState.noteOrder))
@@ -105,12 +106,18 @@ fun NotesScreen(
         }
     }
 
+    LaunchedEffect(isSearchSectionVisible) {
+        if (isSearchSectionVisible) {
+            focusRequester.requestFocus()
+        }
+    }
+
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             NotesScreenTopBar(
                 onSearchClick = { isSearchSectionVisible = !isSearchSectionVisible },
-                onSortClick = { onAction(UiAction.ToggleOrderSection) }
+                onSortClick = { isOrderSectionVisible = !isOrderSectionVisible }
             )
         },
         floatingActionButton = {
@@ -158,14 +165,8 @@ fun NotesScreen(
                 }
             }
 
-            LaunchedEffect(isSearchSectionVisible) {
-                if (isSearchSectionVisible) {
-                    focusRequester.requestFocus()
-                }
-            }
-
             AnimatedVisibility(
-                visible = uiState.isOrderSectionVisible,
+                visible = isOrderSectionVisible,
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
@@ -184,11 +185,10 @@ fun NotesScreen(
             Spacer(modifier = Modifier.height(16.dp))
 
             LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(2),
+                columns = StaggeredGridCells.Adaptive(160.dp),
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(uiState.notes) { note ->
-
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -197,15 +197,14 @@ fun NotesScreen(
                     ) {
                         NoteItem(
                             note = note,
-                            modifier = Modifier
-                                .clickable {
-                                    onAction(
-                                        UiAction.FabClick(
-                                            noteId = note.id ?: -1,
-                                            noteColor = note.color
-                                        )
+                            modifier = Modifier.clickable {
+                                onAction(
+                                    UiAction.FabClick(
+                                        noteId = note.id ?: -1,
+                                        noteColor = note.color
                                     )
-                                },
+                                )
+                            },
                             onDeleteClick = {
                                 onAction(UiAction.DeleteNote(note = note))
                                 onAction(

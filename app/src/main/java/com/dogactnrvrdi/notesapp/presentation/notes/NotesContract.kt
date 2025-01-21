@@ -9,8 +9,7 @@ object NotesContract {
     data class UiState(
         val notes: List<Note> = emptyList(),
         val recentlyDeletedNote: Note? = null,
-        val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
-        val isOrderSectionVisible: Boolean = false
+        val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)
     )
 
     sealed interface UiEffect {
@@ -23,7 +22,6 @@ object NotesContract {
 
     sealed interface UiAction {
         data class Order(val noteOrder: NoteOrder) : UiAction
-        data object ToggleOrderSection : UiAction
         data class FabClick(
             val noteId: Int = -1,
             val noteColor: Int = -1
