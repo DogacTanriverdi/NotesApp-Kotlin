@@ -20,11 +20,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -40,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -55,6 +50,7 @@ import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiAction
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiEffect
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiState
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NoteItem
+import com.dogactnrvrdi.notesapp.presentation.notes.components.NotesScreenTopBar
 import com.dogactnrvrdi.notesapp.presentation.notes.components.OrderSection
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -111,6 +107,12 @@ fun NotesScreen(
 
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
+            NotesScreenTopBar(
+                onSearchClick = { isSearchSectionVisible = !isSearchSectionVisible },
+                onSortClick = { onAction(UiAction.ToggleOrderSection) }
+            )
+        },
         floatingActionButton = {
             CustomFab(
                 icon = Icons.Default.Add,
@@ -119,7 +121,6 @@ fun NotesScreen(
                 onAction(UiAction.FabClick())
             }
         },
-        modifier = Modifier
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -127,56 +128,6 @@ fun NotesScreen(
                 .background(MaterialTheme.colorScheme.background)
                 .padding(innerPadding)
         ) {
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(MaterialTheme.colorScheme.surface)
-                    .height(70.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-
-                Text(
-                    text = stringResource(id = R.string.notes),
-                    color = MaterialTheme.colorScheme.onBackground,
-                    style = MaterialTheme.typography.headlineMedium,
-                    modifier = Modifier.padding(start = 15.dp)
-                )
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.surface)
-                        .height(70.dp),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    IconButton(
-                        onClick = {
-                            isSearchSectionVisible = !isSearchSectionVisible
-                        }) {
-                        Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = stringResource(id = R.string.search_button),
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-
-                    IconButton(
-                        onClick = {
-                            onAction(UiAction.ToggleOrderSection)
-                        },
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Default.Sort,
-                            contentDescription = stringResource(id = R.string.sort_button),
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-                }
-            }
 
             AnimatedVisibility(
                 visible = isSearchSectionVisible,
@@ -266,8 +217,6 @@ fun NotesScreen(
                             }
                         )
                     }
-
-                    Spacer(modifier = Modifier.height(16.dp))
                 }
             }
         }
