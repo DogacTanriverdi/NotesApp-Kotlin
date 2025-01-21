@@ -13,7 +13,7 @@ object NotesContract {
     )
 
     sealed interface UiEffect {
-        data class ShowSnackbar(val message: String, val actionLabel: String) : UiEffect
+        data class ShowSnackbar(val message: String, val actionLabel: String?) : UiEffect
         data class NavigateToAddEditNoteScreen(
             val noteId: Int = -1,
             val noteColor: Int = -1
@@ -28,7 +28,7 @@ object NotesContract {
         ) : UiAction
         data class GetNotes(val noteOrder: NoteOrder) : UiAction
         data class DeleteNote(val note: Note) : UiAction
-        data object RestoreNote : UiAction
+        data class RestoreNote(val message: String,) : UiAction
         data class SearchNote(
             val query: String,
             val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)

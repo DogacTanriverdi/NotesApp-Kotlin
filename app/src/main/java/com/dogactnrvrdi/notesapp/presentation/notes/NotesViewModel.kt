@@ -57,7 +57,17 @@ class NotesViewModel @Inject constructor(
 
             is UiAction.DeleteNote -> deleteNote(uiAction.note)
 
-            UiAction.RestoreNote -> restoreNote()
+            is UiAction.RestoreNote -> {
+                restoreNote()
+                viewModelScope.launch {
+                    emitUiEffect(
+                        UiEffect.ShowSnackbar(
+                            message = uiAction.message,
+                            actionLabel = null
+                        )
+                    )
+                }
+            }
 
             is UiAction.SearchNote -> {
                 searchNote(query = uiAction.query, noteOrder = uiAction.noteOrder)
@@ -65,7 +75,12 @@ class NotesViewModel @Inject constructor(
 
             is UiAction.ShowSnackbar -> {
                 viewModelScope.launch {
-                    emitUiEffect(UiEffect.ShowSnackbar(uiAction.message, uiAction.actionLabel))
+                    emitUiEffect(
+                        UiEffect.ShowSnackbar(
+                            message = uiAction.message,
+                            actionLabel = uiAction.actionLabel
+                        )
+                    )
                 }
             }
         }

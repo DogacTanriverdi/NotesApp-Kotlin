@@ -66,6 +66,8 @@ fun NotesScreen(
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit
 ) {
+    val context = LocalContext.current
+
     val coroutineScope = rememberCoroutineScope()
 
     val snackbarHostState = remember { SnackbarHostState() }
@@ -85,7 +87,7 @@ fun NotesScreen(
                             actionLabel = effect.actionLabel
                         )
                         if (result == SnackbarResult.ActionPerformed) {
-                            onAction(UiAction.RestoreNote)
+                            onAction(UiAction.RestoreNote(message = context.getString(R.string.note_restored_successfully)))
                         }
                     }
                 }
