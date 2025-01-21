@@ -1,6 +1,5 @@
 package com.dogactnrvrdi.notesapp.presentation.addeditnote
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -33,59 +32,68 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.dogactnrvrdi.notesapp.R
+import com.dogactnrvrdi.notesapp.data.model.Note
+import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteContract.UiAction
+import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteContract.UiEffect
+import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteContract.UiState
 import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.ColorSection
 import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.DescriptionTextField
 import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.TitleTextField
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.Flow
 
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun AddEditNoteScreen(
     navController: NavController,
+    noteId: Int,
     noteColor: Int,
-    viewModel: AddEditNoteViewModel = hiltViewModel()
+    uiState: UiState,
+    uiEffect: Flow<UiEffect>,
+    onAction: (UiAction) -> Unit
 ) {
-
-    val titleState = viewModel.noteTitle.value
-    val contentState = viewModel.noteContent.value
-    val colorState = viewModel.colorState.value
-
     val snackbarHostState = remember { SnackbarHostState() }
 
-    val context = LocalContext.current
+    var isColorSectionVisible by remember { mutableStateOf(false) }
+
+    var color by remember { mutableIntStateOf(if (noteColor != -1) noteColor else Note.getRandomColor()) }
 
     val noteBackgroundAnimatable = remember {
         Animatable(
-            Color(if (noteColor != -1) noteColor else viewModel.noteColor.value)
+            Color(if (noteColor != -1) noteColor else color)
         )
+    }
+
+    var title by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
+    uiState.note?.let { note ->
+        title = note.title
+        description = note.description
     }
 
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(key1 = true) {
-        viewModel.eventFlow.collectLatest { event ->
-            when (event) {
+    LaunchedEffect(Unit) {
+        onAction(UiAction.GetNote(noteId))
+    }
 
-                is AddEditNoteViewModel.UIEvent.ShowSnackbar -> {
-                    snackbarHostState.showSnackbar(
-                        message = context.getString(event.message.toInt())
-                    )
-                }
+    LaunchedEffect(uiEffect) {
+        uiEffect.collect { effect ->
+            when (effect) {
 
-                is AddEditNoteViewModel.UIEvent.SaveNote -> {
-                    navController.navigateUp()
-                }
+                UiEffect.NavigateToNotesScreen -> navController.navigateUp()
             }
         }
     }
@@ -95,7 +103,16 @@ fun AddEditNoteScreen(
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
-                    viewModel.saveNote()
+                    onAction(
+                        UiAction.SaveNote(
+                            note = Note(
+                                id = if (noteId != -1) noteId else null,
+                                title = title,
+                                description = description,
+                                color = color
+                            )
+                        )
+                    )
                 },
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onBackground,
@@ -107,12 +124,12 @@ fun AddEditNoteScreen(
                 )
             }
         }
-    ) { paddingValues ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(paddingValues)
+                .padding(innerPadding)
         ) {
 
             Row(
@@ -148,7 +165,7 @@ fun AddEditNoteScreen(
                 }
 
                 IconButton(onClick = {
-                    viewModel.toggleColorSection()
+                    isColorSectionVisible = !isColorSectionVisible
                 }) {
                     Icon(
                         imageVector = Icons.Default.ColorLens,
@@ -159,7 +176,7 @@ fun AddEditNoteScreen(
             }
 
             AnimatedVisibility(
-                visible = colorState.isColorSectionVisible,
+                visible = isColorSectionVisible,
                 enter = fadeIn() + slideInVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
@@ -168,10 +185,12 @@ fun AddEditNoteScreen(
                         .background(MaterialTheme.colorScheme.surface)
                         .fillMaxWidth()
                         .padding(vertical = 16.dp),
-                    viewModel = viewModel,
                     scope = scope,
+                    noteColor = color,
                     noteBackgroundAnimatable = noteBackgroundAnimatable
-                )
+                ) { selectedColor ->
+                    color = selectedColor
+                }
             }
 
             Box(
@@ -185,18 +204,18 @@ fun AddEditNoteScreen(
 
             TitleTextField(
                 modifier = Modifier,
-                text = titleState,
+                text = title,
                 onValueChange = {
-                    viewModel.enteredTitle(it)
+                    title = it
                 }
             )
 
             Spacer(modifier = Modifier.height(16.dp))
 
             DescriptionTextField(
-                text = contentState,
+                text = description,
                 onValueChange = {
-                    viewModel.enteredContent(it)
+                    description = it
                 },
                 modifier = Modifier.fillMaxHeight(),
             )
