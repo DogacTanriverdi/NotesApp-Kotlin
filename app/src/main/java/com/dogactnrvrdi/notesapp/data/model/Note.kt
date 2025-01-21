@@ -1,6 +1,7 @@
 package com.dogactnrvrdi.notesapp.data.model
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -20,6 +21,7 @@ data class Note(
     val createdDateFormatted: String get() = DateFormat.getDateTimeInstance().format(created)
 
     companion object {
+
         val noteColors =
             listOf(
                 Color(0xFFEDB7ED),
@@ -29,7 +31,9 @@ data class Note(
                 Color(0xFF5C8984),
                 Color(0xFFFF9B9B)
             )
+
+        fun getRandomColor(): Int {
+            return noteColors.random().toArgb()
+        }
     }
 }
-
-class InvalidNoteException(message: String) : Exception(message)

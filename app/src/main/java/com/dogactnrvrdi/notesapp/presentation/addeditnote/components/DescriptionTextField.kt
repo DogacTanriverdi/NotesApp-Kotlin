@@ -23,7 +23,6 @@ fun DescriptionTextField(
     onValueChange: (String) -> Unit,
 ) {
     Box(modifier = modifier) {
-
         OutlinedTextField(
             value = text,
             onValueChange = { newValue ->
@@ -40,7 +39,7 @@ fun DescriptionTextField(
             modifier = Modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(start = 10.dp)
+                .padding(horizontal = 10.dp)
         )
     }
 }

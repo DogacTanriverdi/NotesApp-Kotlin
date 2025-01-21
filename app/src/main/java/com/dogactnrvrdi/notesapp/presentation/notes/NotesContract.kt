@@ -9,12 +9,11 @@ object NotesContract {
     data class UiState(
         val notes: List<Note> = emptyList(),
         val recentlyDeletedNote: Note? = null,
-        val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending),
-        val isOrderSectionVisible: Boolean = false
+        val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)
     )
 
     sealed interface UiEffect {
-        data class ShowSnackbar(val message: String, val actionLabel: String) : UiEffect
+        data class ShowSnackbar(val message: String, val actionLabel: String?) : UiEffect
         data class NavigateToAddEditNoteScreen(
             val noteId: Int = -1,
             val noteColor: Int = -1
@@ -23,14 +22,13 @@ object NotesContract {
 
     sealed interface UiAction {
         data class Order(val noteOrder: NoteOrder) : UiAction
-        data object ToggleOrderSection : UiAction
         data class FabClick(
             val noteId: Int = -1,
             val noteColor: Int = -1
         ) : UiAction
         data class GetNotes(val noteOrder: NoteOrder) : UiAction
         data class DeleteNote(val note: Note) : UiAction
-        data object RestoreNote : UiAction
+        data class RestoreNote(val message: String,) : UiAction
         data class SearchNote(
             val query: String,
             val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)
@@ -38,7 +36,6 @@ object NotesContract {
         data class ShowSnackbar(
             val message: String,
             val actionLabel: String,
-            val onActionPerformed: () -> Unit = {}
         ) : UiAction
     }
 }

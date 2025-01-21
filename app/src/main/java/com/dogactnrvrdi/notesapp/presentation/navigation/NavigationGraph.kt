@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteScreen
+import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteViewModel
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesScreen
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesViewModel
 
@@ -39,10 +40,18 @@ fun NavigationGraph(
 
         composable<Screen.AddEditNoteScreen> { navBackStackEntry ->
             val args = navBackStackEntry.toRoute<Screen.AddEditNoteScreen>()
+            val viewModel: AddEditNoteViewModel = hiltViewModel()
+            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+            val uiEffect = viewModel.uiEffect
+            val onAction = viewModel::onAction
 
             AddEditNoteScreen(
                 navController = navController,
-                noteColor = args.noteColor
+                noteId = args.noteId,
+                noteColor = args.noteColor,
+                uiState = uiState,
+                uiEffect = uiEffect,
+                onAction = onAction
             )
         }
     }
