@@ -23,7 +23,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -50,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dogactnrvrdi.notesapp.R
+import com.dogactnrvrdi.notesapp.presentation.components.CustomFab
 import com.dogactnrvrdi.notesapp.presentation.navigation.Screen
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiAction
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiEffect
@@ -112,18 +112,11 @@ fun NotesScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    onAction(UiAction.FabClick())
-                },
-                containerColor = MaterialTheme.colorScheme.surface,
-                contentColor = MaterialTheme.colorScheme.onBackground,
-                shape = RoundedCornerShape(10.dp),
+            CustomFab(
+                icon = Icons.Default.Add,
+                contentDescription = stringResource(id = R.string.add_new_note_button),
             ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(id = R.string.add_new_note_button)
-                )
+                onAction(UiAction.FabClick())
             }
         },
         modifier = Modifier

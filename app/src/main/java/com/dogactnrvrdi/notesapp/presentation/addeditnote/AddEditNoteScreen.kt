@@ -17,12 +17,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -52,6 +50,7 @@ import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteContract.Ui
 import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.ColorSection
 import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.DescriptionTextField
 import com.dogactnrvrdi.notesapp.presentation.addeditnote.components.TitleTextField
+import com.dogactnrvrdi.notesapp.presentation.components.CustomFab
 import kotlinx.coroutines.flow.Flow
 
 @Composable
@@ -101,26 +100,19 @@ fun AddEditNoteScreen(
     Scaffold(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         floatingActionButton = {
-            FloatingActionButton(
-                onClick = {
-                    onAction(
-                        UiAction.SaveNote(
-                            note = Note(
-                                id = if (noteId != -1) noteId else null,
-                                title = title,
-                                description = description,
-                                color = color
-                            )
+            CustomFab(
+                icon = Icons.Default.Save,
+                contentDescription = stringResource(R.string.save_note_button),
+            ) {
+                onAction(
+                    UiAction.SaveNote(
+                        note = Note(
+                            id = if (noteId != -1) noteId else null,
+                            title = title,
+                            description = description,
+                            color = color
                         )
                     )
-                },
-                containerColor = MaterialTheme.colorScheme.surface,
-                contentColor = MaterialTheme.colorScheme.onBackground,
-                shape = RoundedCornerShape(10.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Save,
-                    contentDescription = stringResource(R.string.save_note_button)
                 )
             }
         }
