@@ -23,7 +23,6 @@ fun DescriptionTextField(
     onValueChange: (String) -> Unit,
 ) {
     Box(modifier = modifier) {
-
         OutlinedTextField(
             value = text,
             onValueChange = { newValue ->
