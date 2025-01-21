@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.presentation.add_edit_note.components
+package com.dogactnrvrdi.notesapp.presentation.addeditnote.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector4D
@@ -22,19 +22,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import com.dogactnrvrdi.notesapp.domain.model.Note
-import com.dogactnrvrdi.notesapp.presentation.add_edit_note.AddEditNoteViewModel
+import com.dogactnrvrdi.notesapp.data.model.Note
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun ColorSection(
     modifier: Modifier = Modifier,
-    viewModel: AddEditNoteViewModel,
     scope: CoroutineScope,
-    noteBackgroundAnimatable: Animatable<Color, AnimationVector4D>
+    noteColor: Int,
+    noteBackgroundAnimatable: Animatable<Color, AnimationVector4D>,
+    changeColor: (Int) -> Unit,
 ) {
-
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -53,7 +52,7 @@ fun ColorSection(
                     .background(color)
                     .border(
                         width = 3.dp,
-                        color = if (viewModel.noteColor.value == colorInt)
+                        color = if (noteColor == colorInt)
                             MaterialTheme.colorScheme.onBackground
                         else
                             Color.Transparent,
@@ -66,7 +65,7 @@ fun ColorSection(
                                 animationSpec = tween(durationMillis = 500)
                             )
                         }
-                        viewModel.changeColor(colorInt)
+                        changeColor(colorInt)
                     }
             )
         }

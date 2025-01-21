@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.domain.use_case
+package com.dogactnrvrdi.notesapp.domain.usecase
 
 data class NoteUseCases(
     val getNotes: GetNotesUseCase,

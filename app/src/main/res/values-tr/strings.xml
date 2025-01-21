@@ -36,4 +36,5 @@
     <string name="ascending">Artan</string>
     <string name="descending">Azalan</string>
     <string name="select_color_button">Renk seçme butonu</string>
+    <string name="note_restored_successfully">Not başarıyla geri yüklendi!</string>
 </resources>

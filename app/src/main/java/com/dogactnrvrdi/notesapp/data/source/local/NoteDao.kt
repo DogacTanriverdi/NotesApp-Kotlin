@@ -1,12 +1,11 @@
 package com.dogactnrvrdi.notesapp.data.source.local
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.dogactnrvrdi.notesapp.domain.model.Note
+import com.dogactnrvrdi.notesapp.data.model.Note
 import kotlinx.coroutines.flow.Flow
 
 @Dao

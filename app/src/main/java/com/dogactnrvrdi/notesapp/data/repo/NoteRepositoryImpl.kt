@@ -1,7 +1,6 @@
 package com.dogactnrvrdi.notesapp.data.repo
 
-import androidx.lifecycle.LiveData
-import com.dogactnrvrdi.notesapp.domain.model.Note
+import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.data.source.local.NoteDao
 import com.dogactnrvrdi.notesapp.domain.repo.NoteRepository
 import kotlinx.coroutines.flow.Flow

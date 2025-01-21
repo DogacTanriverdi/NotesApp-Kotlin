@@ -27,7 +27,7 @@ fun OrderSection(
             modifier = Modifier.fillMaxWidth()
         ) {
 
-            DefaultRadioButton(
+            CustomRadioButton(
                 text = stringResource(id = R.string.title),
                 selected = noteOrder is NoteOrder.Title,
                 onSelect = { onOrderChange(NoteOrder.Title(noteOrder.orderType)) }
@@ -35,7 +35,7 @@ fun OrderSection(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            DefaultRadioButton(
+            CustomRadioButton(
                 text = stringResource(id = R.string.date),
                 selected = noteOrder is NoteOrder.Date,
                 onSelect = { onOrderChange(NoteOrder.Date(noteOrder.orderType)) }
@@ -43,7 +43,7 @@ fun OrderSection(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            DefaultRadioButton(
+            CustomRadioButton(
                 text = stringResource(id = R.string.color),
                 selected = noteOrder is NoteOrder.Color,
                 onSelect = { onOrderChange(NoteOrder.Color(noteOrder.orderType)) }
@@ -58,7 +58,7 @@ fun OrderSection(
             modifier = Modifier.fillMaxWidth()
         ) {
 
-            DefaultRadioButton(
+            CustomRadioButton(
                 text = stringResource(id = R.string.ascending),
                 selected = noteOrder.orderType is OrderType.Ascending,
                 onSelect = {
@@ -68,7 +68,7 @@ fun OrderSection(
 
             Spacer(modifier = Modifier.width(8.dp))
 
-            DefaultRadioButton(
+            CustomRadioButton(
                 text = stringResource(id = R.string.descending),
                 selected = noteOrder.orderType is OrderType.Descending,
                 onSelect = {
