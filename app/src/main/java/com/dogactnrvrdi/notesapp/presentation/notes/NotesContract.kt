@@ -36,7 +36,6 @@ object NotesContract {
         data class ShowSnackbar(
             val message: String,
             val actionLabel: String,
-            val onActionPerformed: () -> Unit = {}
         ) : UiAction
     }
 }
