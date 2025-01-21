@@ -10,11 +10,12 @@ object AddEditNoteContract {
     )
 
     sealed interface UiEffect {
-        data object NavigateToNotesScreen: UiEffect
+        data object NavigateBack: UiEffect
     }
 
     sealed interface UiAction {
         data class SaveNote(val note: Note): UiAction
         data class GetNote(val noteId: Int): UiAction
+        data object BackClick: UiAction
     }
 }

@@ -41,6 +41,12 @@ class AddEditNoteViewModel @Inject constructor(
             is UiAction.SaveNote -> saveNote(uiAction.note)
 
             is UiAction.GetNote -> getNote(uiAction.noteId)
+
+            UiAction.BackClick -> {
+                viewModelScope.launch {
+                    emitUiEffect(UiEffect.NavigateBack)
+                }
+            }
         }
     }
 
@@ -56,7 +62,7 @@ class AddEditNoteViewModel @Inject constructor(
     private fun saveNote(note: Note) {
         viewModelScope.launch {
             noteUseCases.addNote(note)
-            emitUiEffect(UiEffect.NavigateToNotesScreen)
+            emitUiEffect(UiEffect.NavigateBack)
         }
     }
 }

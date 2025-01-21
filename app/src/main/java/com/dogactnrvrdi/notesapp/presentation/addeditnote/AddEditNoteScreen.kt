@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dogactnrvrdi.notesapp.R
@@ -55,7 +56,37 @@ fun AddEditNoteScreen(
     uiEffect: Flow<UiEffect>,
     onAction: (UiAction) -> Unit
 ) {
+
+    LaunchedEffect(Unit) {
+        onAction(UiAction.GetNote(noteId))
+    }
+
+    LaunchedEffect(uiEffect) {
+        uiEffect.collect { effect ->
+            when (effect) {
+                UiEffect.NavigateBack -> navController.navigateUp()
+            }
+        }
+    }
+
+    AddEditNoteContent(
+        note = uiState.note,
+        noteColor = noteColor,
+        noteId = noteId,
+        onAction = onAction
+    )
+}
+
+@Composable
+fun AddEditNoteContent(
+    note: Note?,
+    noteColor: Int,
+    noteId: Int,
+    onAction: (UiAction) -> Unit
+) {
     val snackbarHostState = remember { SnackbarHostState() }
+
+    val scope = rememberCoroutineScope()
 
     var isColorSectionVisible by remember { mutableStateOf(false) }
 
@@ -70,24 +101,9 @@ fun AddEditNoteScreen(
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
-    uiState.note?.let { note ->
+    note?.let {
         title = note.title
         description = note.description
-    }
-
-    val scope = rememberCoroutineScope()
-
-    LaunchedEffect(Unit) {
-        onAction(UiAction.GetNote(noteId))
-    }
-
-    LaunchedEffect(uiEffect) {
-        uiEffect.collect { effect ->
-            when (effect) {
-
-                UiEffect.NavigateToNotesScreen -> navController.navigateUp()
-            }
-        }
     }
 
     Scaffold(
@@ -95,7 +111,7 @@ fun AddEditNoteScreen(
         topBar = {
             AddEditNoteScreenTopBar(
                 onColorClick = { isColorSectionVisible = !isColorSectionVisible },
-                onBackClick = { navController.navigateUp() }
+                onBackClick = { onAction(UiAction.BackClick) },
             )
         },
         floatingActionButton = {
@@ -169,4 +185,20 @@ fun AddEditNoteScreen(
             )
         }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun AddEditNoteContentPreview() {
+    AddEditNoteContent(
+        note = Note(
+            id = 1,
+            title = "Title",
+            description = "Description",
+            color = Note.getRandomColor()
+        ),
+        noteColor = Note.getRandomColor(),
+        noteId = 1,
+        onAction = {}
+    )
 }
