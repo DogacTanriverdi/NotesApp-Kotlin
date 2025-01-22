@@ -37,4 +37,6 @@
     <string name="descending">Descending</string>
     <string name="select_color_button">Select color button</string>
     <string name="note_restored_successfully">Note restored successfully!</string>
+    <string name="add_note">Add Note</string>
+    <string name="title_or_description_cannot_be_empty">Title or description cannot be empty!</string>
 </resources>
