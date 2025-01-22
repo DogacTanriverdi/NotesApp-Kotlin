@@ -94,10 +94,7 @@ fun NotesScreen(
 
                 is UiEffect.NavigateToAddEditNoteScreen -> {
                     navController.navigate(
-                        route = Screen.AddEditNoteScreen(
-                            noteId = effect.noteId,
-                            noteColor = effect.noteColor
-                        )
+                        route = Screen.AddNoteScreen
                     )
                 }
             }
