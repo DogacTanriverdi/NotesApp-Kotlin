@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.presentation.addnote.components
+package com.dogactnrvrdi.notesapp.presentation.components
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector4D

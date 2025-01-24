@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.presentation.addnote.components
+package com.dogactnrvrdi.notesapp.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun TitleTextField(
+fun DescriptionTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
@@ -32,7 +32,7 @@ fun TitleTextField(
                 text = hint,
                 color = Color.Gray,
                 textAlign = TextAlign.Center,
-                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
             )
         }
 
@@ -41,22 +41,25 @@ fun TitleTextField(
                 .fillMaxWidth(),
             value = value,
             onValueChange = { newValue ->
-                onValueChange(capitalizeEachWord(newValue))
+                onValueChange(capitalizeFirstLetter(newValue))
             },
-            maxLines = 3,
             textStyle = TextStyle(
-                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
                 color = MaterialTheme.colorScheme.onBackground
             ),
             keyboardOptions = KeyboardOptions.Default.copy(
-                capitalization = KeyboardCapitalization.Words
+                capitalization = KeyboardCapitalization.Sentences
             ),
+            minLines = 50,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
         )
     }
 }
 
-fun capitalizeEachWord(input: String): String {
-    return input.split(" ")
-        .joinToString(" ") { it.replaceFirstChar { char -> char.uppercaseChar() } }
+fun capitalizeFirstLetter(input: String): String {
+    return if (input.isNotEmpty()) {
+        input.replaceFirstChar { it.uppercaseChar() }
+    } else {
+        input
+    }
 }

@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.presentation.addnote.components
+package com.dogactnrvrdi.notesapp.presentation.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun DescriptionTextField(
+fun TitleTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
@@ -32,7 +32,7 @@ fun DescriptionTextField(
                 text = hint,
                 color = Color.Gray,
                 textAlign = TextAlign.Center,
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
             )
         }
 
@@ -41,25 +41,22 @@ fun DescriptionTextField(
                 .fillMaxWidth(),
             value = value,
             onValueChange = { newValue ->
-                onValueChange(capitalizeFirstLetter(newValue))
+                onValueChange(capitalizeEachWord(newValue))
             },
+            maxLines = 3,
             textStyle = TextStyle(
-                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                fontSize = MaterialTheme.typography.headlineLarge.fontSize,
                 color = MaterialTheme.colorScheme.onBackground
             ),
             keyboardOptions = KeyboardOptions.Default.copy(
-                capitalization = KeyboardCapitalization.Sentences
+                capitalization = KeyboardCapitalization.Words
             ),
-            minLines = 50,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
         )
     }
 }
 
-fun capitalizeFirstLetter(input: String): String {
-    return if (input.isNotEmpty()) {
-        input.replaceFirstChar { it.uppercaseChar() }
-    } else {
-        input
-    }
+fun capitalizeEachWord(input: String): String {
+    return input.split(" ")
+        .joinToString(" ") { it.replaceFirstChar { char -> char.uppercaseChar() } }
 }
