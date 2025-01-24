@@ -8,8 +8,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteScreen
-import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteViewModel
 import com.dogactnrvrdi.notesapp.presentation.addnote.AddNoteScreen
 import com.dogactnrvrdi.notesapp.presentation.addnote.AddNoteViewModel
 import com.dogactnrvrdi.notesapp.presentation.editnote.EditNoteScreen
@@ -82,23 +80,6 @@ fun NavigationGraph(
             EditNoteScreen(
                 navController = navController,
                 noteId = args.noteId,
-                uiState = uiState,
-                uiEffect = uiEffect,
-                onAction = onAction
-            )
-        }
-
-        composable<Screen.AddEditNoteScreen> { navBackStackEntry ->
-            val args = navBackStackEntry.toRoute<Screen.AddEditNoteScreen>()
-            val viewModel: AddEditNoteViewModel = hiltViewModel()
-            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
-            val uiEffect = viewModel.uiEffect
-            val onAction = viewModel::onAction
-
-            AddEditNoteScreen(
-                navController = navController,
-                noteId = args.noteId,
-                noteColor = args.noteColor,
                 uiState = uiState,
                 uiEffect = uiEffect,
                 onAction = onAction
