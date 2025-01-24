@@ -6,6 +6,7 @@ import com.dogactnrvrdi.notesapp.domain.usecase.GetNoteUseCase
 import com.dogactnrvrdi.notesapp.domain.usecase.GetNotesUseCase
 import com.dogactnrvrdi.notesapp.domain.usecase.NoteUseCases
 import com.dogactnrvrdi.notesapp.domain.usecase.SearchNoteUseCase
+import com.dogactnrvrdi.notesapp.domain.usecase.UpdateNoteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,14 +21,16 @@ object UseCaseModule {
     fun provideNoteUseCases(
         getNotesUseCase: GetNotesUseCase,
         deleteNoteUseCase: DeleteNoteUseCase,
-        addNoteUseCases: AddNoteUseCase,
+        addNoteUseCase: AddNoteUseCase,
+        updateNoteUseCase: UpdateNoteUseCase,
         getNoteUseCase: GetNoteUseCase,
         searchNoteUseCase: SearchNoteUseCase
     ): NoteUseCases {
         return NoteUseCases(
             getNotes = getNotesUseCase,
             deleteNote = deleteNoteUseCase,
-            addNote = addNoteUseCases,
+            addNote = addNoteUseCase,
+            updateNote = updateNoteUseCase,
             getNote = getNoteUseCase,
             searchNote = searchNoteUseCase
         )
