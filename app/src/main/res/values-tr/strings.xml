@@ -37,4 +37,10 @@
     <string name="descending">Azalan</string>
     <string name="select_color_button">Renk seçme butonu</string>
     <string name="note_restored_successfully">Not başarıyla geri yüklendi!</string>
+    <string name="add_note">Not ekle</string>
+    <string name="title_or_description_cannot_be_empty">Başlık veya açıklama boş olamaz!</string>
+    <string name="create_your_first_note">İlk Notunuzu Oluşturun</string>
+    <string name="your_notebook_is_empty_start_capturing_your_thoughts_ideas_and_memories_by_creating_your_first_note">Not defteriniz boş. İlk notunuzu oluşturarak düşüncelerinizi, fikirlerinizi ve anılarınızı kaydetmeye başlayın.</string>
+    <string name="no_notes_yet">Henüz Not Yok</string>
+    <string name="empty_notes">Notlar boş</string>
 </resources>

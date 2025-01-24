@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -53,6 +54,7 @@ import com.dogactnrvrdi.notesapp.presentation.navigation.Screen
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiAction
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiEffect
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiState
+import com.dogactnrvrdi.notesapp.presentation.notes.components.EmptyNotesView
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NoteItem
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NotesScreenTopBar
 import com.dogactnrvrdi.notesapp.presentation.notes.components.OrderSection
@@ -94,10 +96,7 @@ fun NotesScreen(
 
                 is UiEffect.NavigateToAddEditNoteScreen -> {
                     navController.navigate(
-                        route = Screen.AddEditNoteScreen(
-                            noteId = effect.noteId,
-                            noteColor = effect.noteColor
-                        )
+                        route = Screen.AddNoteScreen
                     )
                 }
             }
@@ -143,13 +142,16 @@ fun NotesContent(
             )
         },
         floatingActionButton = {
-            CustomFab(
-                icon = Icons.Default.Add,
-                contentDescription = stringResource(id = R.string.add_new_note_button),
-            ) {
-                onAction(UiAction.FabClick())
+            if (notes.isNotEmpty()) {
+                CustomFab(
+                    icon = Icons.Default.Add,
+                    contentDescription = stringResource(id = R.string.add_new_note_button),
+                ) {
+                    onAction(UiAction.FabClick())
+                }
             }
         },
+        contentWindowInsets = WindowInsets(bottom = 0)
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -205,6 +207,12 @@ fun NotesContent(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            if (notes.isEmpty()) {
+                EmptyNotesView {
+                    onAction(UiAction.FabClick())
+                }
+            }
 
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Adaptive(160.dp),

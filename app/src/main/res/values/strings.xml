@@ -37,4 +37,10 @@
     <string name="descending">Descending</string>
     <string name="select_color_button">Select color button</string>
     <string name="note_restored_successfully">Note restored successfully!</string>
+    <string name="add_note">Add Note</string>
+    <string name="title_or_description_cannot_be_empty">Title or description cannot be empty!</string>
+    <string name="create_your_first_note">Create Your First Note</string>
+    <string name="your_notebook_is_empty_start_capturing_your_thoughts_ideas_and_memories_by_creating_your_first_note">Your notebook is empty. Start capturing your thoughts, ideas, and memories by creating your first note.</string>
+    <string name="no_notes_yet">No Notes Yet</string>
+    <string name="empty_notes">Notes are empty</string>
 </resources>
