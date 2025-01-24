@@ -8,6 +8,7 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,6 +23,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -37,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -105,12 +108,24 @@ fun NotesScreen(
         }
     }
 
-    NotesContent(
-        snackbarHostState = snackbarHostState,
-        notes = uiState.notes,
-        noteOrder = uiState.noteOrder,
-        onAction = onAction,
-    )
+    when {
+        uiState.isLoading -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        }
+
+        uiState.notes.isEmpty() -> EmptyNotesView { onAction(UiAction.FabClick) }
+
+        else -> {
+            NotesContent(
+                snackbarHostState = snackbarHostState,
+                notes = uiState.notes,
+                noteOrder = uiState.noteOrder,
+                onAction = onAction,
+            )
+        }
+    }
 }
 
 @Composable
@@ -209,12 +224,6 @@ fun NotesContent(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
-
-            if (notes.isEmpty()) {
-                EmptyNotesView {
-                    onAction(UiAction.FabClick)
-                }
-            }
 
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Adaptive(160.dp),

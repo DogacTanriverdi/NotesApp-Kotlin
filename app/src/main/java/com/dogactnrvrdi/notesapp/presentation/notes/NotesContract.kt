@@ -8,6 +8,7 @@ object NotesContract {
 
     data class UiState(
         val notes: List<Note> = emptyList(),
+        val isLoading: Boolean = false,
         val recentlyDeletedNote: Note? = null,
         val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)
     )
