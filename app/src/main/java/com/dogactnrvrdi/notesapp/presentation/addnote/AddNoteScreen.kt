@@ -42,10 +42,10 @@ import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.presentation.addnote.AddNoteContract.UiAction
 import com.dogactnrvrdi.notesapp.presentation.addnote.AddNoteContract.UiEffect
 import com.dogactnrvrdi.notesapp.presentation.addnote.components.AddNoteScreenTopBar
-import com.dogactnrvrdi.notesapp.presentation.addnote.components.ColorSection
-import com.dogactnrvrdi.notesapp.presentation.addnote.components.DescriptionTextField
-import com.dogactnrvrdi.notesapp.presentation.addnote.components.TitleTextField
+import com.dogactnrvrdi.notesapp.presentation.components.ColorSection
 import com.dogactnrvrdi.notesapp.presentation.components.CustomFab
+import com.dogactnrvrdi.notesapp.presentation.components.DescriptionTextField
+import com.dogactnrvrdi.notesapp.presentation.components.TitleTextField
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 

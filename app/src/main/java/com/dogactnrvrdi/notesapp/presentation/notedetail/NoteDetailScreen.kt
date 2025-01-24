@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.dogactnrvrdi.notesapp.presentation.navigation.Screen
 import com.dogactnrvrdi.notesapp.presentation.notedetail.NoteDetailContract.UiAction
 import com.dogactnrvrdi.notesapp.presentation.notedetail.NoteDetailContract.UiEffect
 import com.dogactnrvrdi.notesapp.presentation.notedetail.NoteDetailContract.UiState
@@ -44,7 +45,7 @@ fun NoteDetailScreen(
                 UiEffect.NavigateBack -> navController.navigateUp()
 
                 is UiEffect.NavigateToEditNote -> {
-                    // Navigate to EditNoteScreen
+                    navController.navigate(Screen.EditNoteScreen(noteId))
                 }
             }
         }

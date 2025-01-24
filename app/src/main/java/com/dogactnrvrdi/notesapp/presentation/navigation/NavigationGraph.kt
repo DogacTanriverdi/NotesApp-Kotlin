@@ -12,6 +12,8 @@ import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteScreen
 import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteViewModel
 import com.dogactnrvrdi.notesapp.presentation.addnote.AddNoteScreen
 import com.dogactnrvrdi.notesapp.presentation.addnote.AddNoteViewModel
+import com.dogactnrvrdi.notesapp.presentation.editnote.EditNoteScreen
+import com.dogactnrvrdi.notesapp.presentation.editnote.EditNoteViewModel
 import com.dogactnrvrdi.notesapp.presentation.notedetail.NoteDetailScreen
 import com.dogactnrvrdi.notesapp.presentation.notedetail.NoteDetailViewModel
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesScreen
@@ -62,6 +64,22 @@ fun NavigationGraph(
             val onAction = viewModel::onAction
 
             NoteDetailScreen(
+                navController = navController,
+                noteId = args.noteId,
+                uiState = uiState,
+                uiEffect = uiEffect,
+                onAction = onAction
+            )
+        }
+
+        composable<Screen.EditNoteScreen> { navBackStackEntry ->
+            val args = navBackStackEntry.toRoute<Screen.EditNoteScreen>()
+            val viewModel: EditNoteViewModel = hiltViewModel()
+            val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
+            val uiEffect = viewModel.uiEffect
+            val onAction = viewModel::onAction
+
+            EditNoteScreen(
                 navController = navController,
                 noteId = args.noteId,
                 uiState = uiState,

@@ -14,5 +14,8 @@ sealed interface Screen {
     data class NoteDetailScreen(val noteId: Int) : Screen
 
     @Serializable
+    data class EditNoteScreen(val noteId: Int) : Screen
+
+    @Serializable
     data class AddEditNoteScreen(val noteId: Int = -1, val noteColor: Int = -1) : Screen
 }
