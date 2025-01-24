@@ -54,6 +54,7 @@ import com.dogactnrvrdi.notesapp.presentation.navigation.Screen
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiAction
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiEffect
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiState
+import com.dogactnrvrdi.notesapp.presentation.notes.components.EmptyNotesView
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NoteItem
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NotesScreenTopBar
 import com.dogactnrvrdi.notesapp.presentation.notes.components.OrderSection
@@ -141,11 +142,13 @@ fun NotesContent(
             )
         },
         floatingActionButton = {
-            CustomFab(
-                icon = Icons.Default.Add,
-                contentDescription = stringResource(id = R.string.add_new_note_button),
-            ) {
-                onAction(UiAction.FabClick())
+            if (notes.isNotEmpty()) {
+                CustomFab(
+                    icon = Icons.Default.Add,
+                    contentDescription = stringResource(id = R.string.add_new_note_button),
+                ) {
+                    onAction(UiAction.FabClick())
+                }
             }
         },
         contentWindowInsets = WindowInsets(bottom = 0)
@@ -204,6 +207,12 @@ fun NotesContent(
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+
+            if (notes.isEmpty()) {
+                EmptyNotesView {
+                    onAction(UiAction.FabClick())
+                }
+            }
 
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Adaptive(160.dp),
