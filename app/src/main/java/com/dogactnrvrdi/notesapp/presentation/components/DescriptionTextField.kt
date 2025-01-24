@@ -1,45 +1,57 @@
-package com.dogactnrvrdi.notesapp.presentation.addeditnote.components
+package com.dogactnrvrdi.notesapp.presentation.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.dogactnrvrdi.notesapp.R
 
 @Composable
 fun DescriptionTextField(
-    text: String,
     modifier: Modifier = Modifier,
+    value: String,
     onValueChange: (String) -> Unit,
+    hint: String,
 ) {
     Box(modifier = modifier) {
-        OutlinedTextField(
-            value = text,
+
+        if (value.isEmpty()) {
+            Text(
+                modifier = Modifier
+                    .padding(start = 4.dp),
+                text = hint,
+                color = Color.Gray,
+                textAlign = TextAlign.Center,
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+            )
+        }
+
+        BasicTextField(
+            modifier = Modifier
+                .fillMaxWidth(),
+            value = value,
             onValueChange = { newValue ->
                 onValueChange(capitalizeFirstLetter(newValue))
             },
             textStyle = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = MaterialTheme.typography.titleLarge.fontSize
+                fontSize = MaterialTheme.typography.titleLarge.fontSize,
+                color = MaterialTheme.colorScheme.onBackground
             ),
-            label = { Text(text = stringResource(R.string.description)) },
             keyboardOptions = KeyboardOptions.Default.copy(
                 capitalization = KeyboardCapitalization.Sentences
             ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .padding(horizontal = 10.dp)
+            minLines = 50,
+            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
         )
     }
 }

@@ -13,6 +13,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -45,10 +47,15 @@ class NotesViewModel @Inject constructor(
             is UiAction.FabClick -> {
                 viewModelScope.launch {
                     emitUiEffect(
-                        UiEffect.NavigateToAddEditNoteScreen(
-                            noteId = uiAction.noteId,
-                            noteColor = uiAction.noteColor
-                        )
+                        UiEffect.NavigateToAddNoteScreen
+                    )
+                }
+            }
+
+            is UiAction.NoteClick -> {
+                viewModelScope.launch {
+                    emitUiEffect(
+                        UiEffect.NavigateToNoteDetailScreen(uiAction.noteId)
                     )
                 }
             }
@@ -88,8 +95,12 @@ class NotesViewModel @Inject constructor(
 
     private fun getNotes(noteOrder: NoteOrder) {
         viewModelScope.launch {
-            noteUseCases.getNotes(noteOrder).collect { notes ->
-                updateUiState { copy(notes = notes, noteOrder = noteOrder) }
+            noteUseCases.getNotes(noteOrder).onStart {
+                updateUiState { copy(isLoading = true) }
+            }.onCompletion {
+                updateUiState { copy(isLoading = false) }
+            }.collect { notes ->
+                updateUiState { copy(notes = notes, noteOrder = noteOrder, isLoading = false) }
             }
         }
     }

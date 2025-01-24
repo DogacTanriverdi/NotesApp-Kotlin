@@ -1,4 +1,4 @@
-package com.dogactnrvrdi.notesapp.presentation.addeditnote.components
+package com.dogactnrvrdi.notesapp.presentation.editnote.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import com.dogactnrvrdi.notesapp.R
 
 @Composable
-fun AddEditNoteScreenTopBar(
+fun EditNoteScreenTopBar(
     modifier: Modifier = Modifier,
     onColorClick: () -> Unit,
     onBackClick: () -> Unit,
@@ -49,7 +49,7 @@ fun AddEditNoteScreenTopBar(
             }
 
             Text(
-                text = stringResource(id = R.string.edit_note),
+                text = stringResource(R.string.edit_note),
                 color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.headlineMedium,
                 modifier = Modifier.padding(start = 15.dp)

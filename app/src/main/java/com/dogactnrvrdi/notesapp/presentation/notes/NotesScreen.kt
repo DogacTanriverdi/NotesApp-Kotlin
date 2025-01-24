@@ -8,9 +8,11 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +23,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -36,6 +39,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -53,6 +57,7 @@ import com.dogactnrvrdi.notesapp.presentation.navigation.Screen
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiAction
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiEffect
 import com.dogactnrvrdi.notesapp.presentation.notes.NotesContract.UiState
+import com.dogactnrvrdi.notesapp.presentation.notes.components.EmptyNotesView
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NoteItem
 import com.dogactnrvrdi.notesapp.presentation.notes.components.NotesScreenTopBar
 import com.dogactnrvrdi.notesapp.presentation.notes.components.OrderSection
@@ -92,13 +97,12 @@ fun NotesScreen(
                     }
                 }
 
-                is UiEffect.NavigateToAddEditNoteScreen -> {
-                    navController.navigate(
-                        route = Screen.AddEditNoteScreen(
-                            noteId = effect.noteId,
-                            noteColor = effect.noteColor
-                        )
-                    )
+                is UiEffect.NavigateToAddNoteScreen -> {
+                    navController.navigate(route = Screen.AddNoteScreen)
+                }
+
+                is UiEffect.NavigateToNoteDetailScreen -> {
+                    navController.navigate(route = Screen.NoteDetailScreen(effect.noteId))
                 }
             }
         }
@@ -107,6 +111,7 @@ fun NotesScreen(
     NotesContent(
         snackbarHostState = snackbarHostState,
         notes = uiState.notes,
+        isLoading = uiState.isLoading,
         noteOrder = uiState.noteOrder,
         onAction = onAction,
     )
@@ -116,6 +121,7 @@ fun NotesScreen(
 fun NotesContent(
     snackbarHostState: SnackbarHostState,
     notes: List<Note>,
+    isLoading: Boolean,
     noteOrder: NoteOrder,
     onAction: (UiAction) -> Unit
 ) {
@@ -143,13 +149,16 @@ fun NotesContent(
             )
         },
         floatingActionButton = {
-            CustomFab(
-                icon = Icons.Default.Add,
-                contentDescription = stringResource(id = R.string.add_new_note_button),
-            ) {
-                onAction(UiAction.FabClick())
+            if (notes.isNotEmpty()) {
+                CustomFab(
+                    icon = Icons.Default.Add,
+                    contentDescription = stringResource(id = R.string.add_new_note_button),
+                ) {
+                    onAction(UiAction.FabClick)
+                }
             }
         },
+        contentWindowInsets = WindowInsets(bottom = 0)
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -206,37 +215,46 @@ fun NotesContent(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Adaptive(160.dp),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(notes) { note ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 10.dp, end = 10.dp, bottom = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+            when {
+                isLoading -> {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+
+                notes.isEmpty() -> EmptyNotesView { onAction(UiAction.FabClick) }
+
+                else -> {
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Adaptive(160.dp),
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        NoteItem(
-                            note = note,
-                            modifier = Modifier.clickable {
-                                onAction(
-                                    UiAction.FabClick(
-                                        noteId = note.id ?: -1,
-                                        noteColor = note.color
-                                    )
-                                )
-                            },
-                            onDeleteClick = {
-                                onAction(UiAction.DeleteNote(note = note))
-                                onAction(
-                                    UiAction.ShowSnackbar(
-                                        message = context.getString(R.string.note_deleted_successfully),
-                                        actionLabel = context.getString(R.string.undo)
-                                    )
+                        items(notes) { note ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 10.dp, end = 10.dp, bottom = 20.dp),
+                                horizontalArrangement = Arrangement.SpaceEvenly
+                            ) {
+                                NoteItem(
+                                    note = note,
+                                    modifier = Modifier.clickable {
+                                        onAction(
+                                            UiAction.NoteClick(noteId = note.id ?: -1)
+                                        )
+                                    },
+                                    onDeleteClick = {
+                                        onAction(UiAction.DeleteNote(note = note))
+                                        onAction(
+                                            UiAction.ShowSnackbar(
+                                                message = context.getString(R.string.note_deleted_successfully),
+                                                actionLabel = context.getString(R.string.undo)
+                                            )
+                                        )
+                                    }
                                 )
                             }
-                        )
+                        }
                     }
                 }
             }
@@ -250,6 +268,7 @@ private fun NotesContentPreview() {
     NotesContent(
         snackbarHostState = SnackbarHostState(),
         notes = emptyList(),
+        isLoading = false,
         noteOrder = NoteOrder.Date(OrderType.Descending),
         onAction = {}
     )

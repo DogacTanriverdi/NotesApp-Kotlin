@@ -1,12 +1,11 @@
-package com.dogactnrvrdi.notesapp.presentation.addeditnote
+package com.dogactnrvrdi.notesapp.presentation.notedetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dogactnrvrdi.notesapp.data.model.Note
 import com.dogactnrvrdi.notesapp.domain.usecase.NoteUseCases
-import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteContract.UiAction
-import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteContract.UiEffect
-import com.dogactnrvrdi.notesapp.presentation.addeditnote.AddEditNoteContract.UiState
+import com.dogactnrvrdi.notesapp.presentation.notedetail.NoteDetailContract.UiAction
+import com.dogactnrvrdi.notesapp.presentation.notedetail.NoteDetailContract.UiEffect
+import com.dogactnrvrdi.notesapp.presentation.notedetail.NoteDetailContract.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +16,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddEditNoteViewModel @Inject constructor(
+class NoteDetailViewModel @Inject constructor(
     private val noteUseCases: NoteUseCases,
 ) : ViewModel() {
 
@@ -25,7 +24,7 @@ class AddEditNoteViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     private val _uiEffect by lazy { Channel<UiEffect>() }
-    val uiEffect by lazy { _uiEffect.receiveAsFlow() }
+    val uiEffect = _uiEffect.receiveAsFlow()
 
     private fun updateUiState(block: UiState.() -> UiState) {
         _uiState.update(block)
@@ -38,13 +37,19 @@ class AddEditNoteViewModel @Inject constructor(
     fun onAction(uiAction: UiAction) {
         when (uiAction) {
 
-            is UiAction.SaveNote -> saveNote(uiAction.note)
-
             is UiAction.GetNote -> getNote(uiAction.noteId)
 
             UiAction.BackClick -> {
                 viewModelScope.launch {
                     emitUiEffect(UiEffect.NavigateBack)
+                }
+            }
+
+            UiAction.EditNoteClick -> {
+                viewModelScope.launch {
+                    uiState.value.note?.let { note ->
+                        emitUiEffect(UiEffect.NavigateToEditNote(note))
+                    }
                 }
             }
         }
@@ -56,13 +61,6 @@ class AddEditNoteViewModel @Inject constructor(
                 val note = noteUseCases.getNote(noteId)
                 updateUiState { copy(note = note) }
             }
-        }
-    }
-
-    private fun saveNote(note: Note) {
-        viewModelScope.launch {
-            noteUseCases.addNote(note)
-            emitUiEffect(UiEffect.NavigateBack)
         }
     }
 }

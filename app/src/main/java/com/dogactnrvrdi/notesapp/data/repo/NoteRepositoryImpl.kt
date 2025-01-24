@@ -22,6 +22,9 @@ class NoteRepositoryImpl @Inject constructor(
     override suspend fun deleteNote(note: Note) =
         dao.deleteNote(note)
 
+    override suspend fun updateNote(note: Note) =
+        dao.updateNote(note)
+
     override fun searchNote(query: String): Flow<List<Note>> =
         dao.searchNote(query)
 }
