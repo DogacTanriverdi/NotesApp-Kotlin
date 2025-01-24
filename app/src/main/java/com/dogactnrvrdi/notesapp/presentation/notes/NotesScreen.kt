@@ -108,30 +108,20 @@ fun NotesScreen(
         }
     }
 
-    when {
-        uiState.isLoading -> {
-            Box(modifier = Modifier.fillMaxSize()) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-        }
-
-        uiState.notes.isEmpty() -> EmptyNotesView { onAction(UiAction.FabClick) }
-
-        else -> {
-            NotesContent(
-                snackbarHostState = snackbarHostState,
-                notes = uiState.notes,
-                noteOrder = uiState.noteOrder,
-                onAction = onAction,
-            )
-        }
-    }
+    NotesContent(
+        snackbarHostState = snackbarHostState,
+        notes = uiState.notes,
+        isLoading = uiState.isLoading,
+        noteOrder = uiState.noteOrder,
+        onAction = onAction,
+    )
 }
 
 @Composable
 fun NotesContent(
     snackbarHostState: SnackbarHostState,
     notes: List<Note>,
+    isLoading: Boolean,
     noteOrder: NoteOrder,
     onAction: (UiAction) -> Unit
 ) {
@@ -225,34 +215,46 @@ fun NotesContent(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Adaptive(160.dp),
-                modifier = Modifier.fillMaxSize()
-            ) {
-                items(notes) { note ->
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 10.dp, end = 10.dp, bottom = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
+            when {
+                isLoading -> {
+                    Box(modifier = Modifier.fillMaxSize()) {
+                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    }
+                }
+
+                notes.isEmpty() -> EmptyNotesView { onAction(UiAction.FabClick) }
+
+                else -> {
+                    LazyVerticalStaggeredGrid(
+                        columns = StaggeredGridCells.Adaptive(160.dp),
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        NoteItem(
-                            note = note,
-                            modifier = Modifier.clickable {
-                                onAction(
-                                    UiAction.NoteClick(noteId = note.id ?: -1)
-                                )
-                            },
-                            onDeleteClick = {
-                                onAction(UiAction.DeleteNote(note = note))
-                                onAction(
-                                    UiAction.ShowSnackbar(
-                                        message = context.getString(R.string.note_deleted_successfully),
-                                        actionLabel = context.getString(R.string.undo)
-                                    )
+                        items(notes) { note ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 10.dp, end = 10.dp, bottom = 20.dp),
+                                horizontalArrangement = Arrangement.SpaceEvenly
+                            ) {
+                                NoteItem(
+                                    note = note,
+                                    modifier = Modifier.clickable {
+                                        onAction(
+                                            UiAction.NoteClick(noteId = note.id ?: -1)
+                                        )
+                                    },
+                                    onDeleteClick = {
+                                        onAction(UiAction.DeleteNote(note = note))
+                                        onAction(
+                                            UiAction.ShowSnackbar(
+                                                message = context.getString(R.string.note_deleted_successfully),
+                                                actionLabel = context.getString(R.string.undo)
+                                            )
+                                        )
+                                    }
                                 )
                             }
-                        )
+                        }
                     }
                 }
             }
@@ -266,6 +268,7 @@ private fun NotesContentPreview() {
     NotesContent(
         snackbarHostState = SnackbarHostState(),
         notes = emptyList(),
+        isLoading = false,
         noteOrder = NoteOrder.Date(OrderType.Descending),
         onAction = {}
     )
