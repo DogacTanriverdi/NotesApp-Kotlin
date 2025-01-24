@@ -94,10 +94,12 @@ fun NotesScreen(
                     }
                 }
 
-                is UiEffect.NavigateToAddEditNoteScreen -> {
-                    navController.navigate(
-                        route = Screen.AddNoteScreen
-                    )
+                is UiEffect.NavigateToAddNoteScreen -> {
+                    navController.navigate(route = Screen.AddNoteScreen)
+                }
+
+                is UiEffect.NavigateToNoteDetailScreen -> {
+                    navController.navigate(route = Screen.NoteDetailScreen(effect.noteId))
                 }
             }
         }
@@ -147,7 +149,7 @@ fun NotesContent(
                     icon = Icons.Default.Add,
                     contentDescription = stringResource(id = R.string.add_new_note_button),
                 ) {
-                    onAction(UiAction.FabClick())
+                    onAction(UiAction.FabClick)
                 }
             }
         },
@@ -210,7 +212,7 @@ fun NotesContent(
 
             if (notes.isEmpty()) {
                 EmptyNotesView {
-                    onAction(UiAction.FabClick())
+                    onAction(UiAction.FabClick)
                 }
             }
 
@@ -229,10 +231,7 @@ fun NotesContent(
                             note = note,
                             modifier = Modifier.clickable {
                                 onAction(
-                                    UiAction.FabClick(
-                                        noteId = note.id ?: -1,
-                                        noteColor = note.color
-                                    )
+                                    UiAction.NoteClick(noteId = note.id ?: -1)
                                 )
                             },
                             onDeleteClick = {
