@@ -44,4 +44,9 @@
     <string name="no_notes_yet">No Notes Yet</string>
     <string name="empty_notes">Notes are empty</string>
     <string name="note_detail">Note detail</string>
+    <string name="warning">Warning</string>
+    <string name="unsaved_changes">Unsaved Changes</string>
+    <string name="if_you_go_back_now_your_changes_will_not_be_saved">If you go back now, your changes will not be saved.</string>
+    <string name="go_back">Go Back</string>
+    <string name="stay">Stay</string>
 </resources>
