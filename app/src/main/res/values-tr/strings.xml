@@ -17,7 +17,7 @@
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
     <string name="notes">Notlar</string>
-    <string name="edit_note">Düzenle</string>
+    <string name="edit_note">Notu düzenle</string>
     <string name="notes_cannot_be_empty">Başlık veya açıklama boş olamaz!</string>
     <string name="notebook_logo">Not defterim logosu</string>
     <string name="search">Ara</string>
@@ -43,4 +43,5 @@
     <string name="your_notebook_is_empty_start_capturing_your_thoughts_ideas_and_memories_by_creating_your_first_note">Not defteriniz boş. İlk notunuzu oluşturarak düşüncelerinizi, fikirlerinizi ve anılarınızı kaydetmeye başlayın.</string>
     <string name="no_notes_yet">Henüz Not Yok</string>
     <string name="empty_notes">Notlar boş</string>
+    <string name="note_detail">Not detayı</string>
 </resources>

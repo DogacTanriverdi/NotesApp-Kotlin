@@ -43,4 +43,5 @@
     <string name="your_notebook_is_empty_start_capturing_your_thoughts_ideas_and_memories_by_creating_your_first_note">Your notebook is empty. Start capturing your thoughts, ideas, and memories by creating your first note.</string>
     <string name="no_notes_yet">No Notes Yet</string>
     <string name="empty_notes">Notes are empty</string>
+    <string name="note_detail">Note detail</string>
 </resources>
