@@ -45,10 +45,15 @@ class NotesViewModel @Inject constructor(
             is UiAction.FabClick -> {
                 viewModelScope.launch {
                     emitUiEffect(
-                        UiEffect.NavigateToAddEditNoteScreen(
-                            noteId = uiAction.noteId,
-                            noteColor = uiAction.noteColor
-                        )
+                        UiEffect.NavigateToAddNoteScreen
+                    )
+                }
+            }
+
+            is UiAction.NoteClick -> {
+                viewModelScope.launch {
+                    emitUiEffect(
+                        UiEffect.NavigateToNoteDetailScreen(uiAction.noteId)
                     )
                 }
             }

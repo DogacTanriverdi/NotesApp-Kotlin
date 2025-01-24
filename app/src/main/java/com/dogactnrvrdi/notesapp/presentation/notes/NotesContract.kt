@@ -14,25 +14,22 @@ object NotesContract {
 
     sealed interface UiEffect {
         data class ShowSnackbar(val message: String, val actionLabel: String?) : UiEffect
-        data class NavigateToAddEditNoteScreen(
-            val noteId: Int = -1,
-            val noteColor: Int = -1
-        ) : UiEffect
+        data object NavigateToAddNoteScreen : UiEffect
+        data class NavigateToNoteDetailScreen(val noteId: Int) : UiEffect
     }
 
     sealed interface UiAction {
         data class Order(val noteOrder: NoteOrder) : UiAction
-        data class FabClick(
-            val noteId: Int = -1,
-            val noteColor: Int = -1
-        ) : UiAction
+        data object FabClick : UiAction
+        data class NoteClick(val noteId: Int) : UiAction
         data class GetNotes(val noteOrder: NoteOrder) : UiAction
         data class DeleteNote(val note: Note) : UiAction
-        data class RestoreNote(val message: String,) : UiAction
+        data class RestoreNote(val message: String) : UiAction
         data class SearchNote(
             val query: String,
             val noteOrder: NoteOrder = NoteOrder.Date(OrderType.Descending)
         ) : UiAction
+
         data class ShowSnackbar(
             val message: String,
             val actionLabel: String,
