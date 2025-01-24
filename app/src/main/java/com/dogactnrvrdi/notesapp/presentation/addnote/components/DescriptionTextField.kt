@@ -48,7 +48,7 @@ fun DescriptionTextField(
                 color = MaterialTheme.colorScheme.onBackground
             ),
             keyboardOptions = KeyboardOptions.Default.copy(
-                capitalization = KeyboardCapitalization.Words
+                capitalization = KeyboardCapitalization.Sentences
             ),
             minLines = 50,
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
