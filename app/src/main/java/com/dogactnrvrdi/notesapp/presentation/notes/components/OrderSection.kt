@@ -1,5 +1,6 @@
 package com.dogactnrvrdi.notesapp.presentation.notes.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,7 @@ fun OrderSection(
         ) {
 
             CustomRadioButton(
+                modifier = Modifier.clickable { onOrderChange(NoteOrder.Title(noteOrder.orderType)) },
                 text = stringResource(id = R.string.title),
                 selected = noteOrder is NoteOrder.Title,
                 onSelect = { onOrderChange(NoteOrder.Title(noteOrder.orderType)) }
@@ -36,6 +38,7 @@ fun OrderSection(
             Spacer(modifier = Modifier.width(8.dp))
 
             CustomRadioButton(
+                modifier = Modifier.clickable { onOrderChange(NoteOrder.Date(noteOrder.orderType)) },
                 text = stringResource(id = R.string.date),
                 selected = noteOrder is NoteOrder.Date,
                 onSelect = { onOrderChange(NoteOrder.Date(noteOrder.orderType)) }
@@ -44,6 +47,7 @@ fun OrderSection(
             Spacer(modifier = Modifier.width(8.dp))
 
             CustomRadioButton(
+                modifier = Modifier.clickable { onOrderChange(NoteOrder.Color(noteOrder.orderType)) },
                 text = stringResource(id = R.string.color),
                 selected = noteOrder is NoteOrder.Color,
                 onSelect = { onOrderChange(NoteOrder.Color(noteOrder.orderType)) }
@@ -59,21 +63,19 @@ fun OrderSection(
         ) {
 
             CustomRadioButton(
+                modifier = Modifier.clickable { onOrderChange(noteOrder.copy(OrderType.Ascending)) },
                 text = stringResource(id = R.string.ascending),
                 selected = noteOrder.orderType is OrderType.Ascending,
-                onSelect = {
-                    onOrderChange(noteOrder.copy(OrderType.Ascending))
-                }
+                onSelect = { onOrderChange(noteOrder.copy(OrderType.Ascending)) }
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
             CustomRadioButton(
+                modifier = Modifier.clickable { onOrderChange(noteOrder.copy(OrderType.Descending)) },
                 text = stringResource(id = R.string.descending),
                 selected = noteOrder.orderType is OrderType.Descending,
-                onSelect = {
-                    onOrderChange(noteOrder.copy(OrderType.Descending))
-                }
+                onSelect = { onOrderChange(noteOrder.copy(OrderType.Descending)) }
             )
         }
     }
