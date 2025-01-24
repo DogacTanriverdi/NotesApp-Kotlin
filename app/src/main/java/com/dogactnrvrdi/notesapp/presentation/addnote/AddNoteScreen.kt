@@ -18,6 +18,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -56,7 +57,6 @@ fun AddNoteScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-
     LaunchedEffect(uiEffect) {
         uiEffect.collect { effect ->
             when (effect) {
@@ -76,13 +76,15 @@ fun AddNoteScreen(
     }
 
     AddNoteContent(
-        onAction = onAction
+        onAction = onAction,
+        snackbarHostState = snackbarHostState
     )
 }
 
 @Composable
 fun AddNoteContent(
-    onAction: (UiAction) -> Unit
+    onAction: (UiAction) -> Unit,
+    snackbarHostState: SnackbarHostState
 ) {
     val context = LocalContext.current
 
@@ -98,6 +100,7 @@ fun AddNoteContent(
     var description by remember { mutableStateOf("") }
 
     Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             AddNoteScreenTopBar(
                 onColorClick = { isColorSectionVisible = !isColorSectionVisible },
@@ -109,7 +112,7 @@ fun AddNoteContent(
                 icon = Icons.Default.Save,
                 contentDescription = stringResource(R.string.save_note_button),
             ) {
-                if (title.isBlank() || description.isBlank()) {
+                if (title.isBlank() && description.isBlank()) {
                     onAction(
                         UiAction.ShowSnackbar(
                             message = context.getString(R.string.title_or_description_cannot_be_empty),
@@ -192,6 +195,7 @@ fun AddNoteContent(
 @Composable
 private fun AddNoteContentPreview() {
     AddNoteContent(
-        onAction = {}
+        onAction = {},
+        snackbarHostState = SnackbarHostState()
     )
 }
