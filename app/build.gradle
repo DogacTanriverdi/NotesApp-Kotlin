@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace 'com.dogactnrvrdi.notesapp'
-    compileSdk 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId "com.dogactnrvrdi.notesapp"
         minSdk 23
-        targetSdk 36
+        targetSdk 37
         versionCode 13
         versionName "1.4.1"
 
